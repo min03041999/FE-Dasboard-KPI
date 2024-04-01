@@ -1,24 +1,38 @@
 import * as React from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
 const TableHeadStyle = {
   minWidth: 120,
   whiteSpace: "nowrap",
   paddingBottom: 0,
-  paddingTop: 0
-}
+  paddingTop: 0,
+};
 
 const TableBodyStyle = {
-  "&:last-child td, &:last-child th":
-    { border: 0 },
-}
+  "&:last-child td, &:last-child th": { border: 0 },
+};
 
 const TextStyle = {
   fontWeight: "600",
-}
+};
 
 export default function DataTable(props) {
-  const { header, data, height = "100%", customTableHeadStyle, customTableBodyStyle, customTextStyle } = props;
+  const {
+    header,
+    data,
+    height = "100%",
+    customTableHeadStyle,
+    customTableBodyStyle,
+    customTextStyle,
+  } = props;
 
   const checkImage = (key, check) => {
     if (key === "picture") {
@@ -67,7 +81,10 @@ export default function DataTable(props) {
             >
               {Object.keys(item).map((key, index) => (
                 <TableCell key={index}>
-                  <Typography variant="overline" sx={{ ...TextStyle, ...customTextStyle }}>
+                  <Typography
+                    variant="overline"
+                    sx={{ ...TextStyle, ...customTextStyle }}
+                  >
                     {checkImage(key, item[key])}
                   </Typography>
                 </TableCell>

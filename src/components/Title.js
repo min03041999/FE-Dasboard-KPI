@@ -10,7 +10,7 @@ const Title = (props) => {
     const { name, customStyle } = props;
 
     return (
-        <Typography sx={{ ...TitleStyle, ...customStyle }}>{name}</Typography>
+        <Typography className='title' sx={{ ...TitleStyle, ...customStyle }}>{name}</Typography>
     )
 }
 

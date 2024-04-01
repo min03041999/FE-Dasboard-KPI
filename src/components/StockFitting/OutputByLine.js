@@ -1,15 +1,14 @@
 import React from 'react';
-import Card from '../Card';
+import Card from "../Card";
 import Title from '../Title';
+
 import { Stack, Box } from '@mui/material';
 
 import ColumnLegendIcon from '../../icons/ColumnLegendIcon';
 import ColumnStacked from '../ColumnStacked';
 
-
-const OutPutByFloor = (props) => {
+const OutputByLine = (props) => {
     const { customStyle, setHeightChart, header, data } = props;
-
     return (
         <Card customStyle={customStyle}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
@@ -21,9 +20,9 @@ const OutPutByFloor = (props) => {
                 </Box>
             </Stack>
 
-            <ColumnStacked setHeightChart={setHeightChart} display={true} data={data} />
+            <ColumnStacked setHeightChart={setHeightChart} data={data} display={false} />
         </Card>
     )
 }
 
-export default OutPutByFloor;
+export default OutputByLine;

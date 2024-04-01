@@ -19,3 +19,14 @@ export const transformedData_RFT = (data) => {
         };
     });
 }
+
+export const transformedData_OutPut = (data) => {
+    return data.map(item => {
+        return {
+            line: item.name_machine,
+            target: item.target,
+            actual: item.actual,
+            remaining: item.remaining
+        };
+    });
+}

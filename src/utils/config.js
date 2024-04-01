@@ -1,14 +1,3 @@
-export const COLUMN_CHART_MIXED_COLOR = {
-    eff: {
-        is_target: "#429ef5",
-        is_not_target: "#c62828",
-    },
-    rft: {
-        is_target: "#48048b",
-        is_not_target: "#c62828",
-    }
-}
-
 export const COLUMN_CHART_MIXED_CONFIG = {
     ComposedChart: {
         margin: {
@@ -236,3 +225,16 @@ export const LINE_SIMPLE_CONFIG = {
         }
     }
 }
+
+// Production 
+export const COLUMN_CHART_MIXED_COLOR = {
+    eff: {
+        is_target: "#429ef5",
+        is_not_target: "#c62828",
+    },
+    rft: {
+        is_target: "#48048b",
+        is_not_target: "#c62828",
+    },
+}
+

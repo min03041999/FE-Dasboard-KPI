@@ -40,14 +40,15 @@ const renderCustomizedLabel = (props) => {
 };
 
 const ColumnStacked = (props) => {
-    const { setHeightChart, data } = props;
+    const { setHeightChart, display, data } = props;
 
     return (
         <ResponsiveContainer width="100%" height={setHeightChart}>
             <BarChart {...COLUMN_STACKED_CONFIG.BarChart} data={data}>
                 <CartesianGrid {...COLUMN_STACKED_CONFIG.CartesianGrid} />
                 <XAxis dataKey="line" {...COLUMN_STACKED_CONFIG.XAxis} />
-                <YAxis {...COLUMN_STACKED_CONFIG.YAxis} />
+
+                {display ? <YAxis {...COLUMN_STACKED_CONFIG.YAxis} /> : ""}
                 <Bar
                     isAnimationActive={false}
                     dataKey={"target"}

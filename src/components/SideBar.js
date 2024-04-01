@@ -2,7 +2,14 @@ import * as React from 'react';
 import { List, ListItemButton, ListItemIcon, Typography } from '@mui/material';
 import { Link, useLocation } from "react-router-dom";
 
-import Inventory2Icon from '@mui/icons-material/Inventory2';
+import Icon_Production from '../assets/Image/Icon-Production.png';
+import Icon_Auto_Cutting from '../assets/Image/Icon-Auto-Cutting.png';
+import Icon_StockFitting from '../assets/Image/Icon-StockFitting.png';
+import Icon_Kaizen from '../assets/Image/Icon-Kaizen.png';
+import Icon_Tier_Meeting from '../assets/Image/Icon-Tier-Meeting.png';
+import Icon_Material from '../assets/Image/Icon-Material.png';
+import Icon_Quality_Tracking from '../assets/Image/Icon-Quality-Tracking.png';
+import Icon_FG from '../assets/Image/Icon-FG.png';
 
 const SideBarStyle = {
     position: "fixed",
@@ -37,42 +44,42 @@ const ActiveStyle = {
 
 const sideMenu = [
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Production} alt='icon' width={35} height={35} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Production",
         path: "/",
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Material} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Material W/H",
         path: "/material",
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Auto_Cutting} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Auto Cutting",
         path: "/auto-cutting",
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_StockFitting} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Stockfitting",
         path: "/stockfitting",
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_FG} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "FG W/H",
         path: "/fg-wh"
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Kaizen} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Kaizen",
         path: "/kaizen"
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Tier_Meeting} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Tier Meeting",
         path: "/tier-meeting",
     },
     {
-        icon: <Inventory2Icon />,
+        icon: <img src={Icon_Quality_Tracking} alt='icon' width={30} height={30} style={{ objectFit: "cover", filter: "drop-shadow(2px 4px 6px black)" }} />,
         text: "Quality Tracking",
         path: "/quality-tracking",
     }

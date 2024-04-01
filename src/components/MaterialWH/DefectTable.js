@@ -29,8 +29,10 @@ export default function DefectTable(props) {
                   minWidth: 100,
                   backgroundColor: bgColor,
                   color: color,
+                  whiteSpace: "nowrap",
+                  paddingBottom: "0",
+                  paddingTop: "0",
                 }}
-                sx={{ whiteSpace: "nowrap", paddingBottom: 0, paddingTop: 0 }}
               >
                 {item}
               </TableCell>
@@ -41,37 +43,44 @@ export default function DefectTable(props) {
           {data.map((item, i) => (
             <TableRow key={i}>
               <TableCell
-                padding={0}
+                padding="none"
                 style={{
                   fontSize: 11,
                   textAlign: "center",
-                  padding: 0,
                   fontWeight: "bold",
                 }}
               >
                 {item.SupplierName}
               </TableCell>
-              <TableCell style={{ padding: 0 }}>
+              <TableCell padding="none">
                 <Box>
                   {item.Materials.map((material, i) => (
                     <Box key={i} display="flex">
                       <Box>
                         <LabelImportantIcon fontSize="small" />
                       </Box>
-                      <Box fontSize={11} fontWeight={"bold"}>
+                      <Box
+                        fontSize={11}
+                        fontWeight={"bold"}
+                        whiteSpace={"nowrap"}
+                      >
                         {material.Material_Name}
                       </Box>
                     </Box>
                   ))}
                 </Box>
               </TableCell>
-              <TableCell style={{ padding: 0 }}>
+              <TableCell padding="none">
                 {item.Defect.map((defect, i) => (
                   <Box key={i} display="flex">
                     <Box>
                       <LabelImportantIcon fontSize="small" />
                     </Box>
-                    <Box fontSize={11} fontWeight={"bold"}>
+                    <Box
+                      fontSize={11}
+                      fontWeight={"bold"}
+                      whiteSpace={"nowrap"}
+                    >
                       {defect.Defect_Name}
                     </Box>
                   </Box>

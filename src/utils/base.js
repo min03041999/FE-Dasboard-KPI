@@ -1,3 +1,4 @@
+//Production
 export const IS_TARGET_EFF_RFT = {
     line: {
         rft: {
@@ -9,5 +10,12 @@ export const IS_TARGET_EFF_RFT = {
     floor: {
         rft: 90,
         eff: 60.5,
+    }
+}
+
+//Stock Fitting
+export const IS_TARGET_STOCK_FITTING = {
+    line: {
+        rft: 85
     }
 }

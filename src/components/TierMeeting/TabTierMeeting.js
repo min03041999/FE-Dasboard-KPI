@@ -3,7 +3,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import DataTable from "../DataTable";
-import { HEADER_TIER_MEETING, TIER_MEETING } from "../../data";
+import { HEADER_TIER_MEETING } from "../../data";
+import { tranformed_date } from "../../utils/transformed";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -11,27 +12,34 @@ function CustomTabPanel(props) {
   return value === index && <React.Fragment>{children}</React.Fragment>;
 }
 
-const DATA_TIER_MEETING = TIER_MEETING.map((data) => {
-  return {
-    tier_level: data.tier_level,
-    meeting_date: data.meeting_date,
-    action_plan_no: data.action_plan_no,
-    area: data.area,
-    issue: data.issue,
-    cause: data.cause,
-    action_detail: data.action_detail,
-    p_i_c_name: data.p_i_c_name,
-    due_date: data.due_date,
-    status: data.status,
-    remark: data.remark,
-  };
-});
+function TabTierMeeting(props) {
+  const { setHeight, tierMeetingData } = props;
 
-function TabTierMeeting() {
   const [value, setValue] = React.useState(0);
+
+  const DATA_TIER_MEETING = tierMeetingData.map((data) => {
+    return {
+      tier_level: data.tier_level,
+      meeting_date: tranformed_date(data.meeting_date),
+      action_plan_no: data.action_plan_no,
+      area: data.area,
+      issue: data.issue,
+      cause: data.cause,
+      action_detail: data.action_detail,
+      p_i_c_name: data.p_i_c_name,
+      due_date: tranformed_date(data.due_date),
+      status: data.status,
+      remark: data.remark,
+    };
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const setHeightTable = {
+    ...setHeight,
+    height: parseFloat(parseInt(setHeight.height, 10) - 70),
   };
 
   return (
@@ -52,16 +60,28 @@ function TabTierMeeting() {
         <DataTable
           header={HEADER_TIER_MEETING}
           data={DATA_TIER_MEETING}
-          height="98%"
-          customTableHeadStyle={{ bgcolor: "#337ab7", color: "#fff" }}
+          height={setHeightTable}
+          customTableHeadStyle={{
+            bgcolor: "#337ab7",
+            color: "#fff",
+            height: 60,
+            textAlign: "center",
+          }}
+          alignText="center"
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <DataTable
           header={HEADER_TIER_MEETING}
           data={DATA_TIER_MEETING}
-          height="98%"
-          customTableHeadStyle={{ bgcolor: "#337ab7", color: "#fff" }}
+          height={setHeightTable}
+          customTableHeadStyle={{
+            bgcolor: "#337ab7",
+            color: "#fff",
+            height: 60,
+            textAlign: "center",
+          }}
+          alignText="center"
         />
       </CustomTabPanel>
     </Box>

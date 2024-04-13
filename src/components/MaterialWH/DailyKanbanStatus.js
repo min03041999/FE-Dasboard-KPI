@@ -4,11 +4,17 @@ import Title from "../Title";
 import { TabDailyKanbanStatus } from "./TabTable";
 
 const DailyKanbanStatus = (props) => {
-  const { customStyle, header } = props;
+  const { customStyle, header, dailyRequest, dailyIngrogress, dailyDone } =
+    props;
   return (
     <Card customStyle={customStyle}>
       <Title name={header} />
-      <TabDailyKanbanStatus />
+      <TabDailyKanbanStatus
+        setHeight={customStyle}
+        dailyRequest={dailyRequest}
+        dailyIngrogress={dailyIngrogress}
+        dailyDone={dailyDone}
+      />
     </Card>
   );
 };

@@ -3,12 +3,10 @@ import Card from "../Card";
 import Title from "../Title";
 import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from "recharts";
 import { Box, Typography } from "@mui/material";
-import { OEE_BY_MACHINE } from "../../data";
-
-const DATA_TOTAl_DOWNTIME = [...OEE_BY_MACHINE];
 
 const TotalDowntimeByMachine = (props) => {
-  const { customStyle, header, setHeightChart } = props;
+  const { customStyle, header, setHeightChart, autoCuttingData = [] } = props;
+
   return (
     <Card customStyle={customStyle}>
       <Box
@@ -30,7 +28,7 @@ const TotalDowntimeByMachine = (props) => {
           </Typography>
         </Box>
         <ResponsiveContainer width="100%" height={setHeightChart}>
-          <BarChart data={DATA_TOTAl_DOWNTIME} margin={{ top: 20, bottom: 35 }}>
+          <BarChart data={autoCuttingData} margin={{ top: 20, bottom: 35 }}>
             <XAxis
               dataKey="Layer"
               angle={290}

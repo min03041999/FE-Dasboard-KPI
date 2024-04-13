@@ -2,39 +2,68 @@ import React from "react";
 import Card from "../Card";
 import Title from "../Title";
 import { Box, Typography } from "@mui/material";
-// import { OEE_BY_MACHINE } from "../../data";
-
-// const DATA_DOWNTIME_REASON = OEE_BY_MACHINE.map((data) => {
-//   return {
-//     StartUp: data.StartUp,
-//     ShutDown: data.ShutDownData,
-//     ChangeOver: data.ChangeOver,
-//     Breakdown: data.Equip,
-//     IdleTime: data.IdleTime,
-//   };
-// });
-
-// const TOTAL_DATA = {
-//   StartUp: 0,
-//   ShutDown: 0,
-//   ChangeOver: 0,
-//   Breakdown: 0,
-//   IdleTime: 0,
-// };
-
-// DATA_DOWNTIME_REASON.forEach((data) => {
-//   for (let key in data) {
-//     if (data.hasOwnProperty(key)) {
-//       TOTAL_DATA[key] += data[key];
-//     }
-//   }
-// });
-
-// const totalSum = Object.values(TOTAL_DATA).reduce((acc, val) => acc + val, 0);
-// console.log(totalSum);
 
 const DowntimeReason = (props) => {
-  const { customStyle, header } = props;
+  const { customStyle, header, autoCuttingData = [] } = props;
+
+  const totalStartup = autoCuttingData?.reduce(
+    (acc, item) => acc + item.StartUp,
+    0
+  );
+  const totalShutDown = autoCuttingData?.reduce(
+    (acc, item) => acc + item.ShutDownData,
+    0
+  );
+  const totalIdle = autoCuttingData?.reduce(
+    (acc, item) => acc + item.IdleTime,
+    0
+  );
+  const totalChangeOver = autoCuttingData?.reduce(
+    (acc, item) => acc + item.ChangeOver,
+    0
+  );
+
+  const totalBreakDown = autoCuttingData?.reduce(
+    (acc, item) => acc + item.Equip,
+    0
+  );
+
+  const totalTime =
+    totalStartup + totalShutDown + totalIdle + totalChangeOver + totalBreakDown;
+  const percentStartUp = (totalStartup / totalTime) * 100;
+  const percentShutDown = (totalShutDown / totalTime) * 100;
+  const percentIdle = (totalIdle / totalTime) * 100;
+  const percentChangeOver = (totalChangeOver / totalTime) * 100;
+  const percentBreakDown = (totalBreakDown / totalTime) * 100;
+
+  const downtimeReasonData = [
+    {
+      title: "Breakdown",
+      percentWidth: percentBreakDown,
+      totalLabel: totalBreakDown,
+    },
+    {
+      title: "Changeover",
+      percentWidth: percentChangeOver,
+      totalLabel: totalChangeOver,
+    },
+    {
+      title: "Idle time",
+      percentWidth: percentIdle,
+      totalLabel: totalIdle,
+    },
+    {
+      title: "Shutdown",
+      percentWidth: percentShutDown,
+      totalLabel: totalShutDown,
+    },
+    {
+      title: "Start up",
+      percentWidth: percentStartUp,
+      totalLabel: totalStartup,
+    },
+  ];
+
   return (
     <Card customStyle={customStyle}>
       <Box height="100%" display="flex" flexDirection="column">
@@ -56,95 +85,25 @@ const DowntimeReason = (props) => {
           flexDirection="column"
           justifyContent="space-evenly"
         >
-          <Box display="flex" alignItems={"center"}>
-            <Box width={"30%"}>
-              <Typography fontWeight="bold">Breakdown</Typography>
-            </Box>
-            <Box flex={1}>
-              <Box
-                padding={1}
-                bgcolor={"#118dff"}
-                width={"11%"}
-                textAlign={"end"}
-                fontWeight={600}
-                color={"#fff"}
-              >
-                57
+          {downtimeReasonData.map((data, index) => (
+            <Box display="flex" alignItems={"center"} key={index}>
+              <Box width={"30%"}>
+                <Typography fontWeight="bold">{data.title}</Typography>
+              </Box>
+              <Box flex={1}>
+                <Box
+                  padding={1}
+                  bgcolor={"#118dff"}
+                  width={`${data.percentWidth}%`}
+                  textAlign={"end"}
+                  fontWeight={600}
+                  color={"#fff"}
+                >
+                  {data.totalLabel}
+                </Box>
               </Box>
             </Box>
-          </Box>
-
-          <Box display="flex" alignItems={"center"}>
-            <Box width={"30%"}>
-              <Typography fontWeight="bold">Changeover</Typography>
-            </Box>
-            <Box flex={1}>
-              <Box
-                padding={1}
-                bgcolor={"#118dff"}
-                width={"25%"}
-                textAlign={"end"}
-                fontWeight={600}
-                color={"#fff"}
-              >
-                119
-              </Box>
-            </Box>
-          </Box>
-
-          <Box display="flex" alignItems={"center"}>
-            <Box width={"30%"}>
-              <Typography fontWeight="bold">Idle time</Typography>
-            </Box>
-            <Box flex={1}>
-              <Box
-                padding={1}
-                bgcolor={"#118dff"}
-                width={"21%"}
-                textAlign={"end"}
-                fontWeight={600}
-                color={"#fff"}
-              >
-                100
-              </Box>
-            </Box>
-          </Box>
-
-          <Box display="flex" alignItems={"center"}>
-            <Box width={"30%"}>
-              <Typography fontWeight="bold">Shutdown</Typography>
-            </Box>
-            <Box flex={1}>
-              <Box
-                padding={1}
-                bgcolor={"#118dff"}
-                width={"0%"}
-                textAlign={"end"}
-                fontWeight={600}
-                color={"#fff"}
-              >
-                0
-              </Box>
-            </Box>
-          </Box>
-
-          <Box display="flex" alignItems={"center"}>
-            <Box width={"30%"}>
-              <Typography fontWeight="bold">Start up</Typography>
-            </Box>
-            <Box flex={1}>
-              <Box
-                padding={1}
-                bgcolor={"#118dff"}
-                width={"42%"}
-                textAlign={"end"}
-                fontWeight={600}
-                color={"#fff"}
-              >
-                200
-              </Box>
-            </Box>
-          </Box>
+          ))}
         </Box>
       </Box>
     </Card>

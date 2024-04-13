@@ -25,6 +25,7 @@ export default function DefectTable(props) {
             {header?.map((item, i) => (
               <TableCell
                 key={i}
+                align="center"
                 style={{
                   minWidth: 100,
                   backgroundColor: bgColor,
@@ -40,7 +41,7 @@ export default function DefectTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item, i) => (
+          {data?.map((item, i) => (
             <TableRow key={i}>
               <TableCell
                 padding="none"
@@ -54,24 +55,32 @@ export default function DefectTable(props) {
               </TableCell>
               <TableCell padding="none">
                 <Box>
-                  {item.Materials.map((material, i) => (
-                    <Box key={i} display="flex">
-                      <Box>
-                        <LabelImportantIcon fontSize="small" />
-                      </Box>
-                      <Box
-                        fontSize={11}
-                        fontWeight={"bold"}
-                        whiteSpace={"nowrap"}
-                      >
-                        {material.Material_Name}
-                      </Box>
-                    </Box>
-                  ))}
+                  {item.Materials.length > 0 && (
+                    <>
+                      {Array.from(
+                        new Set(
+                          item.Materials?.map((itemMat) => itemMat.Material_Name)
+                        )
+                      )?.map((uniqueMat, i) => (
+                        <Box key={i} display="flex">
+                          <Box>
+                            <LabelImportantIcon fontSize="small" />
+                          </Box>
+                          <Box
+                            fontSize={11}
+                            fontWeight={"bold"}
+                            whiteSpace={"nowrap"}
+                          >
+                            {uniqueMat}
+                          </Box>
+                        </Box>
+                      ))}
+                    </>
+                  )}
                 </Box>
               </TableCell>
               <TableCell padding="none">
-                {item.Defect.map((defect, i) => (
+                {item.Defect?.map((defect, i) => (
                   <Box key={i} display="flex">
                     <Box>
                       <LabelImportantIcon fontSize="small" />

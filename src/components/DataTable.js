@@ -32,6 +32,7 @@ export default function DataTable(props) {
     customTableHeadStyle,
     customTableBodyStyle,
     customTextStyle,
+    alignText,
   } = props;
 
   const checkImage = (key, check) => {
@@ -66,7 +67,10 @@ export default function DataTable(props) {
             {header?.map((item, i) => (
               <TableCell
                 key={i}
-                sx={{ ...TableHeadStyle, ...customTableHeadStyle }}
+                sx={{
+                  ...TableHeadStyle,
+                  ...customTableHeadStyle,
+                }}
               >
                 {item}
               </TableCell>
@@ -80,7 +84,7 @@ export default function DataTable(props) {
               sx={{ ...TableBodyStyle, ...customTableBodyStyle }}
             >
               {Object.keys(item).map((key, index) => (
-                <TableCell key={index}>
+                <TableCell key={index} align={alignText ? "center" : "left"}>
                   <Typography
                     variant="overline"
                     sx={{ ...TextStyle, ...customTextStyle }}

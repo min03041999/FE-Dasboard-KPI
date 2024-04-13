@@ -11,24 +11,26 @@ import {
   TOP3_N761,
   TOP3_N762,
 } from "../data";
-import DefectTable from "../components/MaterialWH/DefectTable";
-import DataTable from "../components/DataTable";
-import {
-  TabDailyInspectionReport,
-  TabDailyKanbanStatus,
-} from "../components/MaterialWH/TabTable";
-import MatCheckChart from "../components/MaterialWH/MatCheckChart";
-import LeatherChart from "../components/MaterialWH/LeatherChart";
-import PieLegendIcon from "../icons/PieLegendIcon";
 import TopDefectSupplier from "../components/MaterialWH/TopDefectSupplier";
 import TopDefectSubcon from "../components/MaterialWH/TopDefectSubcon";
 import MatCheckStatus from "../components/MaterialWH/MatCheckStatus";
 import MatWHEscalation from "../components/MaterialWH/MatWHEscalation";
 import DailyInspectionReport from "../components/MaterialWH/DailyInspectionReport";
 import DailyKanbanStatus from "../components/MaterialWH/DailyKanbanStatus";
+import { materialApi } from "../api/Material/materialApi";
 
 const MaterialScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [top3Supplier, setTop3Supplier] = useState([]);
+  const [top3Subcon, setTop3Subcon] = useState([]);
+  const [matCheckChart, setMatCheckChart] = useState([]);
+  const [leatherChart, setLeatherChart] = useState([]);
+  const [whEscalation, setWhEscalation] = useState([]);
+  const [leatherSumary, setLeatherSumary] = useState([]);
+  const [matQCCheck, setMatQCCheck] = useState([]);
+  const [dailyRequest, setDailyRequest] = useState([]);
+  const [dailyIngrogress, setDailyIngrogress] = useState([]);
+  const [dailyDone, setDailyDone] = useState([]);
   useEffect(() => {
     function handleResize() {
       setScreenHeight(window.innerHeight);
@@ -41,15 +43,65 @@ const MaterialScreen = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const getTop3Supplier = async () => {
+      let res = await materialApi.getTop3Supplier();
+      setTop3Supplier(res.data.data);
+    };
+    const getTop3Subcon = async () => {
+      let res = await materialApi.getTop3Subcon();
+      setTop3Subcon(res.data.data);
+    };
+    const getMatCheckChart = async () => {
+      let res = await materialApi.getMatCheckChart();
+      setMatCheckChart(res.data.data);
+    };
+    const getLeatherChart = async () => {
+      let res = await materialApi.getLeatherChart();
+      setLeatherChart(res.data.data);
+    };
+    const getWhEscalation = async () => {
+      let res = await materialApi.getWhEscalation();
+      setWhEscalation(res.data.data);
+    };
+    const getDailyLeather = async () => {
+      let res = await materialApi.getDailyLeather();
+      setLeatherSumary(res.data.data);
+    };
+    const getDailyMatQCCheck = async () => {
+      let res = await materialApi.getDailyMatQCCheck();
+      setMatQCCheck(res.data.data);
+    };
+    const getDailyRequestKanBan = async () => {
+      let res = await materialApi.getDailyRequestKanBan();
+      setDailyRequest(res.data.data);
+    };
+    const getDailyIngrogressKanBan = async () => {
+      let res = await materialApi.getDailyIngrogressKanBan();
+      setDailyIngrogress(res.data.data);
+    };
+    const getDailyDoneKanBan = async () => {
+      let res = await materialApi.getDailyDoneKanBan();
+      setDailyDone(res.data.data);
+    };
+    getTop3Supplier();
+    getTop3Subcon();
+    getMatCheckChart();
+    getLeatherChart();
+    getWhEscalation();
+    getDailyLeather();
+    getDailyMatQCCheck();
+    getDailyRequestKanBan();
+    getDailyIngrogressKanBan();
+    getDailyDoneKanBan();
+  }, []);
+
+  // console.log(top3Supplier);
+
   const SET_FULL_SCREEN_LAPTOP =
     screenHeight > 730
-      ? { height: `${screenHeight / 3 - 50}px` }
+      ? { height: `${screenHeight / 3 - 40}px` }
       : { height: "300px" };
-
-  const SET_HEIGHT_CHART =
-    screenHeight > 730 ? screenHeight / 3 - 77 : 300 - 77;
-
-  // console.log(screenHeight / 3);
 
   return (
     <Box component={"div"} className="material-screen">
@@ -77,40 +129,46 @@ const MaterialScreen = () => {
             <TopDefectSupplier
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={HEADER_N762}
-              data={TOP3_N762}
+              data={top3Supplier}
             />
           </Grid>
           <Grid item xs={6}>
             <TopDefectSubcon
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={HEADER_N761}
-              data={TOP3_N761}
+              data={top3Subcon}
             />
           </Grid>
           <Grid item xs={6}>
             <MatCheckStatus
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={"SS24 MATERIAL CHECK STATUS"}
-              setHeightChart={SET_HEIGHT_CHART}
+              matCheckChart={matCheckChart}
+              leatherChart={leatherChart}
             />
           </Grid>
           <Grid item xs={6}>
             <MatWHEscalation
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={HEADER_MATERIAL_WH_ESCALATION}
-              data={MATERIAL_WH_ESCALATION}
+              data={whEscalation}
             />
           </Grid>
           <Grid item xs={6}>
             <DailyInspectionReport
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={"DAILY INSPECTION REPORT"}
+              leatherSumary={leatherSumary}
+              matQCCheck={matQCCheck}
             />
           </Grid>
           <Grid item xs={6}>
             <DailyKanbanStatus
               customStyle={SET_FULL_SCREEN_LAPTOP}
               header={"DAILY KANBAN STATUS"}
+              dailyRequest={dailyRequest}
+              dailyIngrogress={dailyIngrogress}
+              dailyDone={dailyDone}
             />
           </Grid>
         </Grid>

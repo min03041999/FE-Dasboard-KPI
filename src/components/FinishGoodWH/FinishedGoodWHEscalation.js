@@ -9,14 +9,22 @@ import {
 
 const FinishedGoodWHEscalation = (props) => {
   const { customStyle, header } = props;
+  const setHeightTable = {
+    ...customStyle,
+    height: parseFloat(parseInt(customStyle.height, 10) - 40),
+  };
   return (
     <Card customStyle={customStyle}>
       <Title name={header} customStyle={{ textAlign: "center" }} />
       <DataTable
         header={HEADER_FINISHED_GOODS_WH_ESCALATION}
         data={FINISHED_GOODS_WH_ESCALATION}
-        height="95%"
-        customTableHeadStyle={{ bgcolor: "#337ab7", color: "#fff" }}
+        height={setHeightTable}
+        customTableHeadStyle={{
+          bgcolor: "#337ab7",
+          color: "#fff",
+          textAlign: "center",
+        }}
         customTextStyle={{ whiteSpace: "nowrap" }}
       />
     </Card>

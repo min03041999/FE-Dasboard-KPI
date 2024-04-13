@@ -6,12 +6,16 @@ import { Box } from "@mui/material";
 
 const ShippingSchedule = (props) => {
   const { customStyle, header } = props;
+  const setHeightTable = {
+    ...customStyle,
+    height: parseFloat(parseInt(customStyle.height, 10) - 95),
+  };
   return (
     <Card customStyle={customStyle}>
       <Box height={"100%"}>
         <Title name={header} />
         <Box height={"88%"}>
-          <TabShippingSchedule />
+          <TabShippingSchedule setHeightTable={setHeightTable} />
         </Box>
       </Box>
     </Card>

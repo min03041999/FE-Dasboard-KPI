@@ -1,14 +1,37 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import { Box, Grid } from "@mui/material";
-import Card from "../components/Card";
 import StatisticsDashboard from "../components/FinishGoodWH/StatisticsDashboard";
 import RepackingReason from "../components/FinishGoodWH/RepackingReason";
 import ShippingSchedule from "../components/FinishGoodWH/ShippingSchedule";
 import FinishedGoodWHEscalation from "../components/FinishGoodWH/FinishedGoodWHEscalation";
+import { fgwhApi } from "../api/FGWH/fgwhApi";
+
+const initialFgwh = {
+  totalShipped: 0,
+  waitingShipment: 0,
+  waitingInspection: 0,
+  waitingTesting: 0,
+  notFullyImported: 0,
+  MDP: [
+    {
+      MDPTarget: 0,
+      MDPPercent: 0,
+    },
+  ],
+  shippings: [],
+  repackingReason: {
+    po: {
+      total: 0,
+    },
+    defects: [],
+  },
+};
 
 const FGWHScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [fgwhData, setFgwhData] = useState(initialFgwh);
+
   useEffect(() => {
     function handleResize() {
       setScreenHeight(window.innerHeight);
@@ -20,6 +43,41 @@ const FGWHScreen = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const getFinishGoodWH = async () => {
+      let totalShipped = await fgwhApi.getTotalShipped();
+      let waitingShipment = await fgwhApi.getTotalWaitingShipment();
+      let waitingInspection = await fgwhApi.getTotalWaitingInspection();
+      let waitingTesting = await fgwhApi.getTotalWaitingTesting();
+      let notFullyImported = await fgwhApi.getTotalNotFullyImported();
+      let MDP = await fgwhApi.getMDP();
+      let repackingReason = await fgwhApi.getRepackingReason();
+
+      setFgwhData({
+        ...fgwhData,
+        totalShipped: totalShipped.data.data[0].totalShipped,
+        waitingShipment: waitingShipment.data.data[0].waitingShipment,
+        waitingInspection: waitingInspection.data.data[0].waitingInspection,
+        waitingTesting: waitingTesting.data.data[0].waitingTesting,
+        notFullyImported: notFullyImported.data.data[0].notFullyImported,
+        MDP: [...MDP.data.data],
+        repackingReason: { ...repackingReason.data.data },
+      });
+
+      // console.log(
+      //   totalShipped.data.data[0].totalShipped,
+      //   waitingShipment.data.data[0].waitingShipment,
+      //   waitingInspection.data.data[0].waitingInspection,
+      //   waitingTesting.data.data[0].waitingTesting,
+      //   notFullyImported.data.data[0].notFullyImported,
+      //   MDP.data.data
+      // );
+    };
+    getFinishGoodWH();
+  }, []);
+
+  // console.log(fgwhData);
 
   const SET_FULL_SCREEN_LAPTOP =
     screenHeight > 730
@@ -33,11 +91,7 @@ const FGWHScreen = () => {
       </Box>
 
       <Box component={"div"} className="fgwh-screen-body" sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 2 }}
-          // columns={{ xs: 12, sm: 4, md: 12, lg: 12 }}
-        >
+        <Grid container spacing={{ xs: 2, md: 2 }}>
           <Grid item xs={12}>
             <Grid
               container
@@ -47,7 +101,10 @@ const FGWHScreen = () => {
               <Grid item xs={8}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <StatisticsDashboard customStyle={SET_FULL_SCREEN_LAPTOP} />
+                    <StatisticsDashboard
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      fgwhData={fgwhData}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -55,6 +112,7 @@ const FGWHScreen = () => {
                 <RepackingReason
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                   header={"REPACKING REASON"}
+                  fgwhData={fgwhData}
                 />
               </Grid>
             </Grid>

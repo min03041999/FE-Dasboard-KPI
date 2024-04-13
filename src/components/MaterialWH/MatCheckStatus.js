@@ -30,7 +30,12 @@ const PieLegend = [
 ];
 
 const MatCheckStatus = (props) => {
-  const { customStyle, header, setHeightChart } = props;
+  const { customStyle, header, matCheckChart, leatherChart } = props;
+
+  const setHeightChart = {
+    ...customStyle,
+    height: parseFloat(parseInt(customStyle.height, 10) - 41),
+  };
 
   return (
     <Card customStyle={customStyle}>
@@ -74,7 +79,10 @@ const MatCheckStatus = (props) => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <MatCheckChart setHeightChart={setHeightChart} />
+                <MatCheckChart
+                  setHeightChart={setHeightChart.height}
+                  matCheckChart={matCheckChart}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -92,7 +100,10 @@ const MatCheckStatus = (props) => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <LeatherChart setHeightChart={setHeightChart} />
+                <LeatherChart
+                  setHeightChart={setHeightChart.height}
+                  leatherChart={leatherChart}
+                />
               </Grid>
             </Grid>
           </Grid>

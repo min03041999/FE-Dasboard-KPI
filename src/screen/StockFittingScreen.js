@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import { Box, Grid } from "@mui/material";
-import Card from "../components/Card";
 
 import OutputByLine from "../components/StockFitting/OutputByLine";
 
@@ -10,9 +9,14 @@ import RFTByLine from "../components/StockFitting/RFTByLine";
 import StoplineTop3Defect from "../components/StockFitting/StoplineTop3Defect";
 import HourlyOutputByLine from "../components/StockFitting/HourlyOutputByLine";
 import TotalOutputByRY from "../components/StockFitting/TotalOutputByRY";
+import { stockFittingApi } from "../api/StockFitting/stockFittingApi";
 
 const StockFittingScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [outputByLineData, setOutputByLineData] = useState([]);
+  const [rftByLineData, setRftByLineData] = useState([]);
+  const [hourlyOutputByLineData, setHourlyOutputByLineData] = useState([]);
+  const [totalOutputByRyData, setTotalOutputByRyData] = useState([]);
   useEffect(() => {
     function handleResize() {
       setScreenHeight(window.innerHeight);
@@ -25,166 +29,40 @@ const StockFittingScreen = () => {
     };
   }, []);
 
-  const SET_FULL_SCREEN_LAPTOP = screenHeight > 730 ? { height: `${screenHeight / 2 - 40}px` } : { height: "300px" };
-  const SET_HEIGHT_CHART = screenHeight > 730 ? (screenHeight / 2) - 100 : 300 - 40;
+  useEffect(() => {
+    const getOutputByLine = async () => {
+      let res = await stockFittingApi.getOutputByLine();
+      setOutputByLineData(res.data.data);
+    };
+    const getRftByLine = async () => {
+      let res = await stockFittingApi.getRftByLine();
+      setRftByLineData(res.data.data);
+    };
+    const getHourlyOutputByLine = async () => {
+      let res = await stockFittingApi.getHourlyOutputByLine();
+      setHourlyOutputByLineData(res.data.data);
+    };
+    const getTotalOutputByRy = async () => {
+      let res = await stockFittingApi.getTotalOutputByRy();
+      setTotalOutputByRyData(res.data.data);
+    };
+    getOutputByLine();
+    getRftByLine();
+    getHourlyOutputByLine();
+    getTotalOutputByRy();
+  }, []);
 
-  const OUTPUT_BY_LINE = [
-    {
-      "name_machine": "S1",
-      "target": 1500,
-      "actual": 879,
-      "remaining": 621
-    },
-    {
-      "name_machine": "S2",
-      "target": 1350,
-      "actual": 690,
-      "remaining": 660
-    },
-    {
-      "name_machine": "S3",
-      "target": 1200,
-      "actual": 1645,
-      "remaining": -445
-    },
-    {
-      "name_machine": "S4",
-      "target": 1350,
-      "actual": 750,
-      "remaining": 600
-    },
-    {
-      "name_machine": "S5",
-      "target": 1350,
-      "actual": 1010,
-      "remaining": 340
-    },
-    {
-      "name_machine": "S6",
-      "target": 1530,
-      "actual": 800,
-      "remaining": 730
-    },
-    {
-      "name_machine": "S7",
-      "target": 3150,
-      "actual": 3015,
-      "remaining": 135
-    },
-    {
-      "name_machine": "S8",
-      "target": 1250,
-      "actual": 910,
-      "remaining": 340
-    },
-    {
-      "name_machine": "S9",
-      "target": 2800,
-      "actual": 2600,
-      "remaining": 200
-    },
-    {
-      "name_machine": "S10",
-      "target": 3150,
-      "actual": 3005,
-      "remaining": 145
-    },
-    {
-      "name_machine": "S20",
-      "target": 1350,
-      "actual": 980,
-      "remaining": 370
-    },
-    {
-      "name_machine": "S21",
-      "target": 2800,
-      "actual": 2480,
-      "remaining": 320
-    },
-    {
-      "name_machine": "S22",
-      "target": 2800,
-      "actual": 2452,
-      "remaining": 348
-    },
-    {
-      "name_machine": "S23",
-      "target": 2800,
-      "actual": 2533,
-      "remaining": 267
-    },
-    {
-      "name_machine": "S24",
-      "target": 2800,
-      "actual": 2550,
-      "remaining": 250
-    }
-  ];
+  const SET_FULL_SCREEN_LAPTOP =
+    screenHeight > 730
+      ? { height: `${screenHeight / 2 - 40}px` }
+      : { height: "300px" };
+  const SET_HEIGHT_CHART =
+    screenHeight > 730 ? screenHeight / 2 - 100 : 300 - 40;
 
+  const OUTPUT_BY_LINE = [...outputByLineData];
   const tranformed_output = transformedData_OutPut(OUTPUT_BY_LINE);
 
-  const RFT_BY_LINE = [
-    {
-      "name_machine": "S1",
-      "rft": 70
-    },
-    {
-      "name_machine": "S2",
-      "rft": 72
-    },
-    {
-      "name_machine": "S3",
-      "rft": 77
-    },
-    {
-      "name_machine": "S4",
-      "rft": 76
-    },
-    {
-      "name_machine": "S5",
-      "rft": 72
-    },
-    {
-      "name_machine": "S6",
-      "rft": 76
-    },
-    {
-      "name_machine": "S7",
-      "rft": 0
-    },
-    {
-      "name_machine": "S8",
-      "rft": 77
-    },
-    {
-      "name_machine": "S9",
-      "rft": 83
-    },
-    {
-      "name_machine": "S10",
-      "rft": 0
-    },
-    {
-      "name_machine": "S20",
-      "rft": 70
-    },
-    {
-      "name_machine": "S21",
-      "rft": 0
-    },
-    {
-      "name_machine": "S22",
-      "rft": 0
-    },
-    {
-      "name_machine": "S23",
-      "rft": 0
-    },
-    {
-      "name_machine": "S24",
-      "rft": 0
-    }
-  ];
+  const RFT_BY_LINE = [...rftByLineData];
 
   return (
     <Box component={"div"} className="stockfitting-screen">
@@ -200,7 +78,7 @@ const StockFittingScreen = () => {
         <Grid
           container
           spacing={{ xs: 2, md: 2 }}
-          columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
+          columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
         >
           <Grid item xs={12}>
             <Grid
@@ -209,13 +87,26 @@ const StockFittingScreen = () => {
               columns={{ xs: 4, sm: 4, md: 4, lg: 12 }}
             >
               <Grid item xs={4}>
-                <OutputByLine header={"OUTPUT BY LINE"} customStyle={SET_FULL_SCREEN_LAPTOP} setHeightChart={SET_HEIGHT_CHART} data={tranformed_output} />
+                <OutputByLine
+                  header={"OUTPUT BY LINE"}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  data={tranformed_output}
+                />
               </Grid>
               <Grid item xs={4}>
-                <RFTByLine header={"RFT BY LINE"} customStyle={SET_FULL_SCREEN_LAPTOP} setHeightChart={SET_HEIGHT_CHART} data={RFT_BY_LINE} />
+                <RFTByLine
+                  header={"RFT BY LINE"}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  data={RFT_BY_LINE}
+                />
               </Grid>
               <Grid item xs={4}>
-                <StoplineTop3Defect header={"STOPLINE TOP 3 DEFECT"} customStyle={SET_FULL_SCREEN_LAPTOP} />
+                <StoplineTop3Defect
+                  header={"STOPLINE TOP 3 DEFECT"}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -223,13 +114,21 @@ const StockFittingScreen = () => {
             <Grid
               container
               spacing={{ xs: 2, md: 2 }}
-              columns={{ xs: 4, sm: 4, md: 4, lg: 12 }}
+              columns={{ xs: 6, sm: 6, md: 6, lg: 12 }}
             >
               <Grid item xs={6}>
-                <HourlyOutputByLine header={"HOURLY OUTPUT BY LINE"} customStyle={SET_FULL_SCREEN_LAPTOP} />
+                <HourlyOutputByLine
+                  header={"HOURLY OUTPUT BY LINE"}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  hourlyOutputByLineData={hourlyOutputByLineData}
+                />
               </Grid>
               <Grid item xs={6}>
-                <TotalOutputByRY header={"TOTAL OUTPUT BY RY"} customStyle={SET_FULL_SCREEN_LAPTOP} />
+                <TotalOutputByRY
+                  header={"TOTAL OUTPUT BY RY"}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  totalOutputByRyData={totalOutputByRyData}
+                />
               </Grid>
             </Grid>
           </Grid>

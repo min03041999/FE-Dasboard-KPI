@@ -3753,3 +3753,94 @@ export const DATA = [
     RowNumber: "4",
   },
 ];
+
+export const TOTAL_BREAKDOWN_BY_MACHINE = [
+  {
+    name: "CS-7060",
+    value: 2,
+  },
+  {
+    name: "CS-7060",
+    value: 4,
+  },
+  {
+    name: "CS-7060",
+    value: 5,
+  },
+  {
+    name: "CS-7060",
+    value: 4,
+  },
+  {
+    name: "CS-7060",
+    value: 3,
+  },
+  {
+    name: "CS-7060",
+    value: 5,
+  },
+  {
+    name: "CS-7060",
+    value: 4,
+  },
+];
+
+export const TOTAL_DOWNTIME_BY_MACHINE = [
+  {
+    name: "Needle Broken",
+    value: 230,
+  },
+  {
+    name: "Bobbin Broken",
+    value: 220,
+  },
+  {
+    name: "Thread Caught",
+    value: 260,
+  },
+  {
+    name: "Air Loss",
+    value: 300,
+  },
+  {
+    name: "Drop Stitch",
+    value: 250,
+  },
+  {
+    name: "Skip Stitch",
+    value: 230,
+  },
+];
+
+export const MECHANIC_REPAIRING_TIME = [
+  {
+    name: "Mechanic A",
+    repairingtime: 50,
+    waitingtime: 70,
+  },
+  {
+    name: "Mechanic B",
+    repairingtime: 70,
+    waitingtime: 50,
+  },
+  {
+    name: "Mechanic C",
+    repairingtime: 55,
+    waitingtime: 75,
+  },
+  {
+    name: "Mechanic D",
+    repairingtime: 55,
+    waitingtime: 70,
+  },
+  {
+    name: "Mechanic E",
+    repairingtime: 70,
+    waitingtime: 45,
+  },
+  {
+    name: "Mechanic F",
+    repairingtime: 55,
+    waitingtime: 200,
+  },
+];

@@ -3,10 +3,14 @@ import Card from "../Card";
 import Title from "../Title";
 import { Grid } from "@mui/material";
 import DataTable from "../DataTable";
-import { HEADER_OEE_BY_MACHINE, OEE_BY_MACHINE } from "../../data";
+// import { HEADER_OEE_BY_MACHINE, OEE_BY_MACHINE } from "../../data";
+
+import { useTranslation } from "react-i18next";
 
 const OEEByMachine = (props) => {
   const { customStyle, header, autoCuttingData = [] } = props;
+  const [t] = useTranslation("global");
+
   const setHeightTable = {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 40),
@@ -25,6 +29,20 @@ const OEEByMachine = (props) => {
       OEE: `${(data.OEE * 100).toFixed(1)}%`,
     };
   });
+
+  const HEADER_OEE_BY_MACHINE = [
+    t("auto-cutting.oee-by-machine-machine"),
+    t("auto-cutting.oee-by-machine-uptime"),
+    t("auto-cutting.oee-by-machine-downtime"),
+    t("auto-cutting.oee-by-machine-available-time"),
+    t("auto-cutting.oee-by-machine-availability-percent"),
+    t("auto-cutting.oee-by-machine-theoretical-ouput"),
+    t("auto-cutting.oee-by-machine-actual-output"),
+    t("auto-cutting.oee-by-machine-performance"),
+    t("auto-cutting.oee-by-machine-defect"),
+    t("auto-cutting.oee-by-machine-oee"),
+  ];
+
   return (
     <Card customStyle={customStyle}>
       <Grid container height={"100%"}>

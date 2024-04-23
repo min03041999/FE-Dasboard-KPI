@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import Card from "../components/Card";
-import Title from "../components/Title";
-import {
-  HEADER_MATERIAL_WH_ESCALATION,
-  HEADER_N761,
-  HEADER_N762,
-  MATERIAL_WH_ESCALATION,
-  TOP3_N761,
-  TOP3_N762,
-} from "../data";
+import { Box, Grid } from "@mui/material";
+
 import TopDefectSupplier from "../components/MaterialWH/TopDefectSupplier";
 import TopDefectSubcon from "../components/MaterialWH/TopDefectSubcon";
 import MatCheckStatus from "../components/MaterialWH/MatCheckStatus";
@@ -18,6 +9,8 @@ import MatWHEscalation from "../components/MaterialWH/MatWHEscalation";
 import DailyInspectionReport from "../components/MaterialWH/DailyInspectionReport";
 import DailyKanbanStatus from "../components/MaterialWH/DailyKanbanStatus";
 import { materialApi } from "../api/Material/materialApi";
+
+import { useTranslation } from "react-i18next";
 
 const MaterialScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -31,6 +24,9 @@ const MaterialScreen = () => {
   const [dailyRequest, setDailyRequest] = useState([]);
   const [dailyIngrogress, setDailyIngrogress] = useState([]);
   const [dailyDone, setDailyDone] = useState([]);
+
+  const [t] = useTranslation("global");
+
   useEffect(() => {
     function handleResize() {
       setScreenHeight(window.innerHeight);
@@ -113,7 +109,7 @@ const MaterialScreen = () => {
             : { position: "relative", height: "100%" }
         }
       >
-        <Breadcrumb>Material W/H</Breadcrumb>
+        <Breadcrumb>{t("material-wh.name")}</Breadcrumb>
       </Box>
       <Box
         component={"div"}
@@ -128,21 +124,19 @@ const MaterialScreen = () => {
           <Grid item xs={6}>
             <TopDefectSupplier
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={HEADER_N762}
               data={top3Supplier}
             />
           </Grid>
           <Grid item xs={6}>
             <TopDefectSubcon
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={HEADER_N761}
               data={top3Subcon}
             />
           </Grid>
           <Grid item xs={6}>
             <MatCheckStatus
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"SS24 MATERIAL CHECK STATUS"}
+              header={t("material-wh.ss24-material-check-status")}
               matCheckChart={matCheckChart}
               leatherChart={leatherChart}
             />
@@ -150,14 +144,14 @@ const MaterialScreen = () => {
           <Grid item xs={6}>
             <MatWHEscalation
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={HEADER_MATERIAL_WH_ESCALATION}
+              header={t("material-wh.material-wh-escalation")}
               data={whEscalation}
             />
           </Grid>
           <Grid item xs={6}>
             <DailyInspectionReport
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"DAILY INSPECTION REPORT"}
+              header={t("material-wh.daily-inspection-report")}
               leatherSumary={leatherSumary}
               matQCCheck={matQCCheck}
             />
@@ -165,7 +159,7 @@ const MaterialScreen = () => {
           <Grid item xs={6}>
             <DailyKanbanStatus
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"DAILY KANBAN STATUS"}
+              header={t("material-wh.daily-kaiban-status")}
               dailyRequest={dailyRequest}
               dailyIngrogress={dailyIngrogress}
               dailyDone={dailyDone}

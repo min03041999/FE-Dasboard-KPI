@@ -3,11 +3,16 @@ import React, { useEffect, useState } from "react";
 import Breadcrumb from "../components/Breadcrumb";
 import Navigation from "../components/Navigation";
 import { FACTORY } from "../utils/env";
-import Card from "../components/Card";
-import TotalChartByDowntime from "../components/Downtime/TotalChartByDowntime";
+// import TotalChartByDowntime from "../components/Downtime/ChartByDowntime";
 import TotalDowntimeByReason from "../components/Downtime/TotalDowntimeByReason";
 import MechanicRepairingTime from "../components/Downtime/MechanicRepairingTime";
 import MechanicList from "../components/Downtime/MechanicList";
+import RepairingStatus from "../components/Downtime/RepairingStatus";
+import TotalBreakdownByLineOrMachine from "../components/Downtime/TotalBreakdownByLineOrMachine";
+import TotalMachineDowntimeByLine from "../components/Downtime/TotalMachineDowntimeByLine";
+
+import { useTranslation } from "react-i18next";
+import { downTimeApi } from "../api/Downtime/Downtime";
 
 const DowntimeScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -17,6 +22,13 @@ const DowntimeScreen = () => {
     line: "",
     section: "",
   });
+
+  const [breakDownTime, setBreakDownTime] = useState([]);
+  const [breakDownMinutes, setBreakDownMinutes] = useState([]);
+  const [repairingStatus, setRepairingStatus] = useState([]);
+  const [downtTimeReason, setDownTimeReason] = useState([]);
+  const [mechanicRepairTime, setMechanicRepairTime] = useState([]);
+  const [listMechanic, setListMechanic] = useState([]);
 
   useEffect(() => {
     function handleResize() {
@@ -30,12 +42,53 @@ const DowntimeScreen = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const getBreakDownTimes = async (navigate) => {
+      const res = await downTimeApi.getBreakdownTimes(navigate);
+      setBreakDownTime(res.data.data);
+    };
+
+    const getBreakDownMinutes = async (navigate) => {
+      const res = await downTimeApi.getBreakdownMinutes(navigate);
+      setBreakDownMinutes(res.data.data);
+    };
+
+    const getDowntimeReason = async (navigate) => {
+      const res = await downTimeApi.getDowntimeReason(navigate);
+      setDownTimeReason(res.data.data);
+    };
+
+    const getRepairingStatus = async (navigate) => {
+      const res = await downTimeApi.getRepairingStatus(navigate);
+      setRepairingStatus(res.data.data);
+    };
+
+    const getMechanicRepairTime = async (navigate) => {
+      const res = await downTimeApi.getMechanicRepairTime(navigate);
+      setMechanicRepairTime(res.data.data);
+    };
+
+    const getListMechanic = async (navigate) => {
+      const res = await downTimeApi.getListMechanic(navigate);
+      setListMechanic(res.data.data);
+    };
+
+    getBreakDownTimes(navigate);
+    getBreakDownMinutes(navigate);
+    getRepairingStatus(navigate);
+    getDowntimeReason(navigate);
+    getMechanicRepairTime(navigate);
+    getListMechanic(navigate);
+  }, [navigate]);
+
   const SET_FULL_SCREEN_LAPTOP =
     screenHeight > 730
       ? { height: `${screenHeight / 3}px` }
       : { height: "300px" };
   const SET_HEIGHT_CHART =
     screenHeight > 730 ? screenHeight / 3 - 90 : 300 - 90;
+
+  const [t] = useTranslation("global");
   return (
     <Box component={"div"} className="downtime-screen">
       <Box
@@ -46,7 +99,7 @@ const DowntimeScreen = () => {
             : { position: "relative", height: "100%" }
         }
       >
-        <Breadcrumb>Downtime Dashboard</Breadcrumb>
+        <Breadcrumb>{t("downtime.name")}</Breadcrumb>
         <Navigation navigate={navigate} setNavigate={setNavigate} />
       </Box>
       <Box
@@ -54,41 +107,58 @@ const DowntimeScreen = () => {
         className="downtime-screen-body"
         sx={{ flexGrow: 1 }}
       >
-        <Grid container spacing={2} marginTop={1}>
-          <Grid item xs={3}>
-            <TotalChartByDowntime
+        <Grid
+          container
+          spacing={2}
+          marginTop={1}
+          // columns={{ xs: 2, sm: 6, md: 4, lg: 12 }}
+        >
+          <Grid item lg={3} md={6} sm={6} xs={12}>
+            <TotalBreakdownByLineOrMachine
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"TOTAL BREAKDOWN BY MACHINE (times)"}
+              header={t("downtime.breakdown-by-machine")}
               setHeightChart={SET_HEIGHT_CHART}
+              data={breakDownTime}
+              titleTimes={t("downtime.breakdown-by-machine-times")}
             />
           </Grid>
-          <Grid item xs={3}>
-            <TotalChartByDowntime
+          <Grid item lg={3} md={6} sm={6} xs={12}>
+            <TotalMachineDowntimeByLine
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"TOTAL DOWNTIME BY MACHINE (minutes)"}
+              header={t("downtime.machine-downtime-by-line")}
               setHeightChart={SET_HEIGHT_CHART}
+              data={breakDownMinutes}
+              titleMinutes={t("downtime.machine-downtime-by-line-minutes")}
             />
           </Grid>
-          <Grid item xs={6}>
-            <Card customStyle={SET_FULL_SCREEN_LAPTOP}></Card>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <RepairingStatus
+              customStyle={SET_FULL_SCREEN_LAPTOP}
+              header={t("downtime.repairing-status")}
+              data={repairingStatus}
+            />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} md={6} sm={6} xs={12}>
             <TotalDowntimeByReason
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"TOTAL DOWNTIME BY MACHINE (minutes)"}
+              header={t("downtime.downtime-by-machine")}
               setHeightChart={SET_HEIGHT_CHART}
+              titleMinutes={t("downtime.downtime-by-machine-minutes")}
+              data={downtTimeReason}
             />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item lg={5} md={6} sm={6} xs={12}>
             <MechanicRepairingTime
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"MECHANIC REPAIRING TIME (minutes)"}
+              header={t("downtime.repairing-time")}
+              data={mechanicRepairTime}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} md={12} sm={12} xs={12}>
             <MechanicList
               customStyle={SET_FULL_SCREEN_LAPTOP}
-              header={"MECHANIC LIST"}
+              header={t("downtime.mechanic-list")}
+              data={listMechanic}
             />
           </Grid>
         </Grid>

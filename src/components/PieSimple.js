@@ -8,7 +8,7 @@ const PieSimple = (props) => {
     <ResponsiveContainer width={"100%"} height={setHeightChart}>
       <PieChart>
         <Pie
-          isAnimationActive={false}
+          // isAnimationActive={false}
           data={data}
           dataKey="value"
           nameKey="name"

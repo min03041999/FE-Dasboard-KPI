@@ -5,37 +5,43 @@ import Title from "../Title";
 import PieLegendIcon from "../../icons/PieLegendIcon";
 import MatCheckChart from "./MatCheckChart";
 import LeatherChart from "./LeatherChart";
-
-const PieLegend = [
-  {
-    NameEng: "Inspection",
-    NameVit: "Kiem duyet",
-    color: "#fc6e51",
-  },
-  {
-    NameEng: "Pass",
-    NameVit: "Hoan thanh",
-    color: "#a0d468",
-  },
-  {
-    NameEng: "Fail",
-    NameVit: "Loi",
-    color: "#fb4343",
-  },
-  {
-    NameEng: "Waiting for lab",
-    NameVit: "Cho thi nghiem",
-    color: "#ffce54",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const MatCheckStatus = (props) => {
+  const [t] = useTranslation("global");
   const { customStyle, header, matCheckChart, leatherChart } = props;
 
   const setHeightChart = {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 41),
   };
+
+  const PieLegend = [
+    {
+      NameEng: t("material-wh.ss24-material-check-status-inspection"),
+      NameVit: "",
+      // NameVit: "Kiem duyet",
+      color: "#fc6e51",
+    },
+    {
+      NameEng: t("material-wh.ss24-material-check-status-pass"),
+      NameVit: "",
+      // NameVit: "Hoan thanh",
+      color: "#a0d468",
+    },
+    {
+      NameEng: t("material-wh.ss24-material-check-status-fail"),
+      NameVit: "",
+      // NameVit: "Loi",
+      color: "#fb4343",
+    },
+    {
+      NameEng: t("material-wh.ss24-material-check-status-waiting"),
+      NameVit: "",
+      // NameVit: "Cho thi nghiem",
+      color: "#ffce54",
+    },
+  ];
 
   return (
     <Card customStyle={customStyle}>
@@ -75,7 +81,7 @@ const MatCheckStatus = (props) => {
             <Grid container>
               <Grid item xs={12}>
                 <Box textAlign={"center"} fontWeight={"bold"}>
-                  GENERAL TRACKING
+                  {t("material-wh.ss24-material-check-status-general-tracking")}
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -96,7 +102,7 @@ const MatCheckStatus = (props) => {
             <Grid container>
               <Grid item xs={12}>
                 <Box textAlign={"center"} fontWeight={"bold"}>
-                  LEATHER SUMMARY
+                  {t("material-wh.ss24-material-check-status-leather-summary")}
                 </Box>
               </Grid>
               <Grid item xs={12}>

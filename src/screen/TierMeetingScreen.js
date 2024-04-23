@@ -5,6 +5,8 @@ import { TabTierMeeting } from "../components/TierMeeting/TabTierMeeting";
 import Card from "../components/Card";
 import { tierMeetingApi } from "../api/TierMeeting/tierMeetingApi";
 
+import { useTranslation } from "react-i18next";
+
 const TierMeetingScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [tierMeetingData, setTierMeetingData] = useState([]);
@@ -30,10 +32,12 @@ const TierMeetingScreen = () => {
 
   const SET_FULL_SCREEN_LAPTOP = { height: `${screenHeight - 70}px` };
 
+  const [t] = useTranslation("global");
+
   return (
     <Box component={"div"} className="tier-meeting-screen">
       <Box component={"div"}>
-        <Breadcrumb>Tier Meeting</Breadcrumb>
+        <Breadcrumb>{t("tier-meeting.name")}</Breadcrumb>
       </Box>
 
       <Box

@@ -4,22 +4,25 @@ import Title from "../Title";
 import DataTable from "../DataTable";
 import { tranformed_date } from "../../utils/transformed";
 
+import { useTranslation } from "react-i18next";
+
 const TotalOutputByRY = (props) => {
   const { customStyle, header, totalOutputByRyData } = props;
+  const [t] = useTranslation("global");
 
   const setHeightTable = {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 40),
   };
   const HEADER_TABLE = [
-    "RY",
-    "ART",
-    "MODEL NAME",
-    "LINE",
-    "PROD DATE",
-    "TARGET",
-    "DONE",
-    "ONGOING",
+    t("stockfitting.total-output-by-ry-ry"),
+    t("stockfitting.total-output-by-ry-art"),
+    t("stockfitting.total-output-by-ry-model-name"),
+    t("stockfitting.total-output-by-ry-line"),
+    t("stockfitting.total-output-by-ry-prod-date"),
+    t("stockfitting.total-output-by-ry-target"),
+    t("stockfitting.total-output-by-ry-done"),
+    t("stockfitting.total-output-by-ry-ongoing"),
   ];
 
   const DATA = totalOutputByRyData.map((data) => {

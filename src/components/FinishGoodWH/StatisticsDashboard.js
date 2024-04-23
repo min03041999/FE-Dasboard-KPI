@@ -3,9 +3,11 @@ import Card from "../Card";
 import { Box, Grid, Typography } from "@mui/material";
 import Title from "../Title";
 import FinishGoodCard from "./FinishGoodCard";
+import { useTranslation } from "react-i18next";
 
 const StatisticsDashboard = (props) => {
   const { customStyle, fgwhData } = props;
+  const [t] = useTranslation("global");
   const setHeight = parseFloat(customStyle?.height) / 2 - 8;
 
   return (
@@ -13,19 +15,19 @@ const StatisticsDashboard = (props) => {
       <Grid item xs={12}>
         <Grid container spacing={2} columns={{ xs: 4, sm: 4, md: 12, lg: 12 }}>
           <FinishGoodCard
-            name="TOTAL SHIPPED"
+            name={t("fg-w-h.total-shipped")}
             titleNumber={fgwhData.totalShipped}
             setHeight={setHeight}
           />
 
           <FinishGoodCard
-            name="WAITING FOR SHIPMENT"
+            name={t("fg-w-h.waiting-for-shipment")}
             titleNumber={fgwhData.waitingShipment}
             setHeight={setHeight}
           />
 
           <FinishGoodCard
-            name="WAITING FOR INSPECTION"
+            name={t("fg-w-h.waiting-for-inspection")}
             titleNumber={fgwhData.waitingInspection}
             setHeight={setHeight}
           />
@@ -36,31 +38,37 @@ const StatisticsDashboard = (props) => {
           <Grid item xs={4}>
             <Card customStyle={{ height: setHeight + "px" }}>
               <Box display="flex" flexDirection="column" height="100%">
-                <Title name={"MDP %"} customStyle={{ textAlign: "center" }} />
+                <Title
+                  name={t("fg-w-h.mdp")}
+                  customStyle={{
+                    textAlign: "center",
+                    fontSize: "25px !important",
+                  }}
+                />
                 <Box
                   flex={1}
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Typography variant="h3" component="h3" fontWeight={500}>
+                  <Typography variant="h5" component="h5" fontWeight={600}>
                     {fgwhData.MDP[0].MDPPercent}%
                   </Typography>
                 </Box>
                 <Typography variant="h5" fontWeight={600}>
-                  TARGET: {fgwhData.MDP[0].MDPTarget}%
+                  {t("fg-w-h.mdp-target")} {fgwhData.MDP[0].MDPTarget}%
                 </Typography>
               </Box>
             </Card>
           </Grid>
           <FinishGoodCard
-            name="WAITING FOR TESTING"
+            name={t("fg-w-h.waiting-for-testing")}
             titleNumber={fgwhData.waitingTesting}
             setHeight={setHeight}
           />
 
           <FinishGoodCard
-            name="NOT FULLY IMPORTED"
+            name={t("fg-w-h.not-fully-imported")}
             titleNumber={fgwhData.notFullyImported}
             setHeight={setHeight}
           />

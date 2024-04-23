@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import OverallOEE from "../components/AutoCutting/OverallOEE";
 import OverallOEECard from "../components/AutoCutting/OverallOEECard";
 import TotalDowntimeByMachine from "../components/AutoCutting/TotalDowntimeByMachine";
@@ -8,11 +8,16 @@ import DowntimeReason from "../components/AutoCutting/DowntimeReason";
 import OEEByMachine from "../components/AutoCutting/OEEByMachine";
 import TotalOutputByRy from "../components/AutoCutting/TotalOutputByRy";
 import { autoCuttingApi } from "../api/AutoCutting/autoCuttingApi";
+import { Link } from "react-router-dom";
+
+import { useTranslation } from "react-i18next";
+
 const AutoCuttingScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [autoCuttingData, setAutoCuttingData] = useState([]);
   const [materialOnGoing, setMaterialOnGoing] = useState([]);
   const [materialDone, setMaterialDone] = useState([]);
+  const [t] = useTranslation("global");
 
   useEffect(() => {
     function handleResize() {
@@ -53,7 +58,40 @@ const AutoCuttingScreen = () => {
   return (
     <Box component={"div"} className="autocutting-screen">
       <Box component={"div"}>
-        <Breadcrumb>Auto Cutting</Breadcrumb>
+        <Breadcrumb>
+          {t("auto-cutting.name")}
+          <Button
+            component={Link}
+            variant="contained"
+            sx={{
+              bgcolor: "#82ca9d",
+              marginRight: 2,
+              marginLeft: 2,
+              ":hover": {
+                bgcolor: "#82ca9d",
+                color: "#fff",
+                opacity: 0.8,
+              },
+            }}
+          >
+            {t("auto-cutting.auto-cutting")}
+          </Button>
+          <Button
+            component={Link}
+            variant="contained"
+            sx={{
+              bgcolor: "#82ca9d",
+              ":hover": {
+                bgcolor: "#82ca9d",
+                color: "#fff",
+                opacity: 0.8,
+              },
+            }}
+            to={"/downtime"}
+          >
+            {t("auto-cutting.down-time")}
+          </Button>
+        </Breadcrumb>
       </Box>
 
       <Box
@@ -75,7 +113,7 @@ const AutoCuttingScreen = () => {
               <Grid item xs={2}>
                 <OverallOEE
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"OVERALL OEE"}
+                  header={t("auto-cutting.overall-oee")}
                   setHeightChart={SET_HEIGHT_CHART}
                   autoCuttingData={autoCuttingData}
                 />
@@ -89,7 +127,10 @@ const AutoCuttingScreen = () => {
               <Grid item xs={4}>
                 <TotalDowntimeByMachine
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"TOTAL DOWNTIME BY MACHINE"}
+                  header={t("auto-cutting.total-downtime-by-machine")}
+                  unit={t(
+                    "auto-cutting.total-downtime-by-machine-unit-minutes"
+                  )}
                   setHeightChart={SET_HEIGHT_CHART}
                   autoCuttingData={autoCuttingData}
                 />
@@ -97,7 +138,8 @@ const AutoCuttingScreen = () => {
               <Grid item xs={3}>
                 <DowntimeReason
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"DOWNTIME REASON"}
+                  header={t("auto-cutting.downtime-reason")}
+                  unit={t("auto-cutting.downtime-reason-unit-minutes")}
                   autoCuttingData={autoCuttingData}
                 />
               </Grid>
@@ -112,14 +154,14 @@ const AutoCuttingScreen = () => {
               <Grid item xs={6}>
                 <OEEByMachine
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"OEE BY MACHINE"}
+                  header={t("auto-cutting.oee-by-machine")}
                   autoCuttingData={autoCuttingData}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TotalOutputByRy
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"TOTAL OUTPUT BY RY"}
+                  header={t("auto-cutting.total-output-by-ry")}
                   materialOnGoing={materialOnGoing}
                   materialDone={materialDone}
                 />

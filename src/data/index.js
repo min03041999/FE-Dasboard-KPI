@@ -3754,34 +3754,65 @@ export const DATA = [
   },
 ];
 
-export const TOTAL_BREAKDOWN_BY_MACHINE = [
+export const TOTAL_BREAKDOWN_BY_LINE = [
   {
-    name: "CS-7060",
+    name: "C-1",
     value: 2,
   },
   {
-    name: "CS-7060",
+    name: "C-2",
     value: 4,
   },
   {
-    name: "CS-7060",
+    name: "C-3",
     value: 5,
   },
   {
-    name: "CS-7060",
+    name: "C-4",
     value: 4,
   },
   {
-    name: "CS-7060",
+    name: "C-5",
     value: 3,
   },
   {
-    name: "CS-7060",
+    name: "C-6",
     value: 5,
   },
   {
-    name: "CS-7060",
+    name: "C-7",
     value: 4,
+  },
+];
+
+export const TOTAL_DOWNTIME_BY_LINE = [
+  {
+    name: "C-1",
+    value: 15,
+  },
+  {
+    name: "C-2",
+    value: 30,
+  },
+  {
+    name: "C-3",
+    value: 38,
+  },
+  {
+    name: "C-4",
+    value: 30,
+  },
+  {
+    name: "C-5",
+    value: 23,
+  },
+  {
+    name: "C-6",
+    value: 38,
+  },
+  {
+    name: "C-7",
+    value: 30,
   },
 ];
 
@@ -3842,5 +3873,146 @@ export const MECHANIC_REPAIRING_TIME = [
     name: "Mechanic F",
     repairingtime: 55,
     waitingtime: 200,
+  },
+];
+
+// export const HEADER_MECHANIC_REPAIRING_TIME = [
+//   "Mechanic",
+//   "Mechanic Type",
+//   "Current Task",
+//   "Status",
+//   "Total Repairing",
+// ];
+
+export const HEADER_MECHANIC_REPAIRING_TIME = [
+  "技師姓名",
+  "維修項目",
+  "當前任務",
+  "狀態",
+  "修復次數",
+];
+
+export const DATA_MECHANIC_REPAIRING_TIME = [
+  {
+    Mechanic: "Mechanic A",
+    MechanicType: "Sewing",
+    CurrentTask: "CS machine C2M1",
+    Status: "Fixing",
+    TotalRepairing: "10",
+  },
+  {
+    Mechanic: "Mechanic B",
+    MechanicType: "Sewing",
+    CurrentTask: "Post machine C2M1",
+    Status: "Fixing",
+    TotalRepairing: "5",
+  },
+  {
+    Mechanic: "Mechanic C",
+    MechanicType: "Sewing",
+    CurrentTask: "Post machine C2M1",
+    Status: "Fixing",
+    TotalRepairing: "6",
+  },
+  {
+    Mechanic: "Mechanic D",
+    MechanicType: "Electrical",
+    CurrentTask: "",
+    Status: "Available",
+    TotalRepairing: "5",
+  },
+  {
+    Mechanic: "Mechanic E",
+    MechanicType: "Electrical",
+    CurrentTask: "",
+    Status: "Available",
+    TotalRepairing: "3",
+  },
+];
+
+// export const HEADER_REPAIRING_TIME = [
+//   "Line",
+//   "Machine Type",
+//   "Machine Name",
+//   "Breakdown Issue",
+//   "Waiting",
+//   "Repairing",
+//   "Done",
+// ];
+
+export const HEADER_REPAIRING_TIME = [
+  "線別",
+  "機器類別",
+  "機器名稱",
+  "損壞原因",
+  "等待時間",
+  "修復時間",
+  "完成時間",
+];
+
+export const DATA_REPAIRING_TIME = [
+  {
+    Line: "C-M1",
+    MachineType: "Computer Stitching",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Thread caught",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "",
+    Done: "",
+  },
+  {
+    Line: "C-M3",
+    MachineType: "Edge binding",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Needle broken",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "",
+  },
+  {
+    Line: "C-G2",
+    MachineType: "Strobel",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Thread caught",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "11:30 10 min Thao-3891",
+  },
+  {
+    Line: "C-G2",
+    MachineType: "Roller Coating",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Needle broken",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "11:30 10 min Thao-3891",
+  },
+
+  {
+    Line: "C-G2",
+    MachineType: "Gauge marking",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Needle broken",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "11:30 10 min Thao-3891",
+  },
+  {
+    Line: "C-G2",
+    MachineType: "Gauge marking",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Needle broken",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "11:30 10 min Thao-3891",
+  },
+  {
+    Line: "C-G2",
+    MachineType: "Gauge marking",
+    MachineName: "CS-7060 TS-0123",
+    BreakdownIssue: "Needle broken",
+    Waiting: "10:30 10 min Thao-3891",
+    Repairing: "09:50 10 min Thao-3891",
+    Done: "11:30 10 min Thao-3891",
   },
 ];

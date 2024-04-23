@@ -2,13 +2,11 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import {
-  HEADER_DAILY_KANBAN_STATUS,
-  HEADER_LEATHER_SUMMARY,
-  HEADER_MATQCCHECK,
-} from "../../data";
+// import { HEADER_LEATHER_SUMMARY, HEADER_MATQCCHECK } from "../../data";
 import DataTable from "../DataTable";
 import { tranformed_date } from "../../utils/transformed";
+
+import { useTranslation } from "react-i18next";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -19,6 +17,13 @@ function CustomTabPanel(props) {
 function TabDailyKanbanStatus(props) {
   const { setHeight, dailyRequest, dailyIngrogress, dailyDone } = props;
   const [value, setValue] = React.useState(0);
+  const [t] = useTranslation("global");
+
+  const HEADER_DAILY_KANBAN_STATUS = [
+    t("material-wh.daily-kaiban-status-dept"),
+    t("material-wh.daily-kaiban-status-kaibanno"),
+    t("material-wh.daily-kaiban-status-receive-date-request"),
+  ];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,9 +68,9 @@ function TabDailyKanbanStatus(props) {
         }}
       >
         <Tabs value={value} onChange={handleChange} variant="fullWidth">
-          <Tab label="REQUEST" />
-          <Tab label="IN PROGRESS" />
-          <Tab label="DONE" />
+          <Tab label={t("material-wh.daily-kaiban-status-request")} />
+          <Tab label={t("material-wh.daily-kaiban-status-in-progress")} />
+          <Tab label={t("material-wh.daily-kaiban-status-done")} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -116,11 +121,44 @@ function TabDailyKanbanStatus(props) {
 
 function TabDailyInspectionReport(props) {
   const { setHeight, leatherSumary, matQCCheck } = props;
+  const [t] = useTranslation("global");
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const HEADER_LEATHER_SUMMARY = [
+    t("material-wh.daily-inspection-report-leather-receive-date"),
+    t("material-wh.daily-inspection-report-leather-report-no"),
+    t("material-wh.daily-inspection-report-leather-supplier"),
+    t("material-wh.daily-inspection-report-leather-mat-id"),
+    t("material-wh.daily-inspection-report-leather-mat-name"),
+    t("material-wh.daily-inspection-report-leather-total-qty"),
+    t("material-wh.daily-inspection-report-leather-inspection-qty"),
+    t("material-wh.daily-inspection-report-leather-defect-qty"),
+    t("material-wh.daily-inspection-report-leather-percent-defect"),
+    t("material-wh.daily-inspection-report-leather-percent-released"),
+    t("material-wh.daily-inspection-report-leather-inspection-result"),
+    t("material-wh.daily-inspection-report-leather-inspection-date"),
+  ];
+
+  const HEADER_MATQCCHECK = [
+    t("material-wh.daily-inspection-report-syn-receive-date"),
+    t("material-wh.daily-inspection-report-syn-report-no"),
+    t("material-wh.daily-inspection-report-syn-supplier"),
+    t("material-wh.daily-inspection-report-syn-mat-id"),
+    t("material-wh.daily-inspection-report-syn-mat-name"),
+    t("material-wh.daily-inspection-report-syn-ry"),
+    t("material-wh.daily-inspection-report-syn-art"),
+    t("material-wh.daily-inspection-report-syn-total-qty"),
+    t("material-wh.daily-inspection-report-syn-inspected-qty"),
+    t("material-wh.daily-inspection-report-syn-defect-qty"),
+    t("material-wh.daily-inspection-report-syn-inspection-result"),
+    t("material-wh.daily-inspection-report-syn-test-result"),
+    t("material-wh.daily-inspection-report-syn-final-result"),
+    t("material-wh.daily-inspection-report-syn-inspection-date"),
+  ];
 
   const DATA_LEATHER_SUMMARY = leatherSumary?.map((data) => {
     return {
@@ -173,8 +211,8 @@ function TabDailyInspectionReport(props) {
         }}
       >
         <Tabs value={value} onChange={handleChange} variant="fullWidth">
-          <Tab label="LEATHER" />
-          <Tab label="SYN, TEXTILE, ACCESSORY" />
+          <Tab label={t("material-wh.daily-inspection-report-leather")} />
+          <Tab label={t("material-wh.daily-inspection-report-syn")} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

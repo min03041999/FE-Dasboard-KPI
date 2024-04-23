@@ -4,10 +4,12 @@ import Title from "../Title";
 import ColumnLegendIcon from "../../icons/ColumnLegendIcon";
 import { Box } from "@mui/material";
 import { Bar, BarChart, ResponsiveContainer, XAxis } from "recharts";
-import { MECHANIC_REPAIRING_TIME } from "../../data";
+// import { MECHANIC_REPAIRING_TIME } from "../../data";
+
+import { useTranslation } from "react-i18next";
 
 const MechanicRepairingTime = (props) => {
-  const { customStyle, header } = props;
+  const { customStyle, header, data } = props;
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   useEffect(() => {
     function handleResize() {
@@ -21,15 +23,24 @@ const MechanicRepairingTime = (props) => {
     };
   }, []);
 
+  const transformedData = data.map((item) => {
+    return {
+      name: item.name,
+      repairingtime: item.repairing,
+      waitingtime: item.waiting,
+    };
+  });
+
   const SET_HEIGHT_CHART =
     screenHeight > 730 ? screenHeight / 3 - 40 : 300 - 40;
 
+  const [t, i18n] = useTranslation("global");
   return (
     <Card customStyle={customStyle}>
       <Title name={header} />
       <Box display={"flex"} gap={3}>
         <ColumnLegendIcon
-          name={"Repairing Time"}
+          name={t("downtime.repairing-time-pair-time")}
           color={"#118dff"}
           customStyle={{
             borderRadius: "50%",
@@ -38,7 +49,7 @@ const MechanicRepairingTime = (props) => {
           }}
         />
         <ColumnLegendIcon
-          name={"Waiting Time"}
+          name={t("downtime.repairing-time-wait-time")}
           color={"#f09538"}
           customStyle={{
             borderRadius: "50%",
@@ -49,7 +60,7 @@ const MechanicRepairingTime = (props) => {
       </Box>
       <Box>
         <ResponsiveContainer width={"100%"} height={SET_HEIGHT_CHART}>
-          <BarChart data={MECHANIC_REPAIRING_TIME}>
+          <BarChart data={transformedData}>
             <XAxis
               dataKey="name"
               fontSize={11}

@@ -3,8 +3,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import DataTable from "../DataTable";
-import { HEADER_TIER_MEETING } from "../../data";
+// import { HEADER_TIER_MEETING } from "../../data";
 import { tranformed_date } from "../../utils/transformed";
+
+import { useTranslation } from "react-i18next";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -42,6 +44,22 @@ function TabTierMeeting(props) {
     height: parseFloat(parseInt(setHeight.height, 10) - 70),
   };
 
+  const [t] = useTranslation("global");
+
+  const HEADER_TIER_MEETING = [
+    t("tier-meeting.tier-meeting-tier-level"),
+    t("tier-meeting.tier-meeting-meeting-date"),
+    t("tier-meeting.tier-meeting-action-plan-no"),
+    t("tier-meeting.tier-meeting-area"),
+    t("tier-meeting.tier-meeting-issue"),
+    t("tier-meeting.tier-meeting-cause"),
+    t("tier-meeting.tier-meeting-action-detail"),
+    t("tier-meeting.tier-meeting-p-i-c"),
+    t("tier-meeting.tier-meeting-due-date"),
+    t("tier-meeting.tier-meeting-status"),
+    t("tier-meeting.tier-meeting-remark"),
+  ];
+
   return (
     <Box sx={{ width: "100%", height: "93%" }}>
       <Box
@@ -52,8 +70,8 @@ function TabTierMeeting(props) {
         }}
       >
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="ALL" />
-          <Tab label="TIER MEETING" />
+          <Tab label={t("tier-meeting.all")} />
+          <Tab label={t("tier-meeting.tier-meeting")} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

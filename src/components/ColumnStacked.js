@@ -1,9 +1,9 @@
 import React from "react";
-import Card from "./Card";
-import Title from "./Title";
-import { Stack, Box } from "@mui/material";
+// import Card from "./Card";
+// import Title from "./Title";
+// import { Stack, Box } from "@mui/material";
 
-import ColumnLegendIcon from "../icons/ColumnLegendIcon";
+// import ColumnLegendIcon from "../icons/ColumnLegendIcon";
 
 import {
   ResponsiveContainer,
@@ -57,16 +57,16 @@ const ColumnStacked = (props) => {
         line: item.line,
         target: item.target,
         actual: item.actual,
-      }
+      };
     } else {
       return {
         line: item.line,
         target: item.target,
         actual: item.actual,
         remaining: remaining,
-      }
+      };
     }
-  })
+  });
 
   return (
     <ResponsiveContainer width="100%" height={setHeightChart}>
@@ -76,16 +76,16 @@ const ColumnStacked = (props) => {
 
         {display ? <YAxis {...COLUMN_STACKED_CONFIG.YAxis} /> : ""}
         <Bar
-          isAnimationActive={false}
+          // isAnimationActive={false}
           dataKey={"target"}
           barSize={0}
           display={"none"}
         />
         <Bar
-          isAnimationActive={false}
+          // isAnimationActive={false}
           dataKey="actual"
           stackId="line"
-          fill="#2e7d32"
+          fill="#89b558"
           barSize={30}
         >
           <LabelList
@@ -95,10 +95,10 @@ const ColumnStacked = (props) => {
           />
         </Bar>
         <Bar
-          isAnimationActive={false}
+          // isAnimationActive={false}
           dataKey="remaining"
           stackId="line"
-          fill="#c62828"
+          fill="#fb4343"
           barSize={30}
         >
           <LabelList

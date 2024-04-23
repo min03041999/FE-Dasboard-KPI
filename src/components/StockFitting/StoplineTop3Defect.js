@@ -17,6 +17,7 @@ import {
 import moment from "moment";
 import { stockFittingApi } from "../../api/StockFitting/stockFittingApi";
 import { dataLine } from "../../data";
+import { useTranslation } from "react-i18next";
 
 const StoplineTop3Defect = (props) => {
   const { customStyle, header } = props;
@@ -24,6 +25,7 @@ const StoplineTop3Defect = (props) => {
   const [stopLineTop3Defect, setStopLineTop3Defect] = useState([]);
   const date = moment();
   const fullDate = date.clone().format("YYYY-MM-DD");
+  const [t] = useTranslation("global");
 
   const getStopLineTop3 = async (date, line) => {
     let res = await stockFittingApi.getStopLineTop3(date, line);
@@ -46,8 +48,11 @@ const StoplineTop3Defect = (props) => {
 
   const DATA = [...stopLineTop3Defect];
 
-  const colorDefectName = ["red", "darkgreen", "yellow", "lightgreen"];
-  const colorPieChart = ["#5dd15b", "#46583e", "#ced11e", "#f33434"];
+  // const colorDefectName = ["red", "darkgreen", "yellow", "lightgreen"];
+  // const colorPieChart = ["#5dd15b", "#46583e", "#ced11e", "#f33434"];
+
+  const colorDefectName = ["#fb4343", "#fb852e", "#ffce54", "#a0d468"];
+  const colorPieChart = ["#fb4343", "#fb852e", "#ffce54", "#a0d468"];
 
   const percentData = DATA?.map((item, index) => ({
     name: `Defect ${index + 1}`,
@@ -68,7 +73,11 @@ const StoplineTop3Defect = (props) => {
     percentData[percentData.length - 1].value -= excess;
   }
 
-  const HEADER_TABLE = ["Defect Name", "Action plan & Follow up", "Picture"];
+  const HEADER_TABLE = [
+    t("stockfitting.stopline-top-3-defect-name"),
+    t("stockfitting.stopline-top-3-defect-action"),
+    t("stockfitting.stopline-top-3-picture"),
+  ];
 
   const CUSTOM_DATA = DATA?.map((item) => {
     return {
@@ -104,7 +113,9 @@ const StoplineTop3Defect = (props) => {
           }}
         >
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-label">Line</InputLabel>
+            <InputLabel id="demo-simple-select-label">
+              {t("stockfitting.stopline-top-3-defect-line")}
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"

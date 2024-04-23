@@ -7,6 +7,8 @@ import ShippingSchedule from "../components/FinishGoodWH/ShippingSchedule";
 import FinishedGoodWHEscalation from "../components/FinishGoodWH/FinishedGoodWHEscalation";
 import { fgwhApi } from "../api/FGWH/fgwhApi";
 
+import { useTranslation } from "react-i18next";
+
 const initialFgwh = {
   totalShipped: 0,
   waitingShipment: 0,
@@ -31,6 +33,7 @@ const initialFgwh = {
 const FGWHScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [fgwhData, setFgwhData] = useState(initialFgwh);
+  const [t] = useTranslation("global");
 
   useEffect(() => {
     function handleResize() {
@@ -64,20 +67,9 @@ const FGWHScreen = () => {
         MDP: [...MDP.data.data],
         repackingReason: { ...repackingReason.data.data },
       });
-
-      // console.log(
-      //   totalShipped.data.data[0].totalShipped,
-      //   waitingShipment.data.data[0].waitingShipment,
-      //   waitingInspection.data.data[0].waitingInspection,
-      //   waitingTesting.data.data[0].waitingTesting,
-      //   notFullyImported.data.data[0].notFullyImported,
-      //   MDP.data.data
-      // );
     };
     getFinishGoodWH();
   }, []);
-
-  // console.log(fgwhData);
 
   const SET_FULL_SCREEN_LAPTOP =
     screenHeight > 730
@@ -87,7 +79,7 @@ const FGWHScreen = () => {
   return (
     <Box component={"div"} className="fgwh-screen">
       <Box component={"div"}>
-        <Breadcrumb>FG W/H</Breadcrumb>
+        <Breadcrumb>{t("fg-w-h.name")}</Breadcrumb>
       </Box>
 
       <Box component={"div"} className="fgwh-screen-body" sx={{ flexGrow: 1 }}>
@@ -111,7 +103,7 @@ const FGWHScreen = () => {
               <Grid item xs={4}>
                 <RepackingReason
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"REPACKING REASON"}
+                  header={t("fg-w-h.repacking-reason")}
                   fgwhData={fgwhData}
                 />
               </Grid>
@@ -126,13 +118,13 @@ const FGWHScreen = () => {
               <Grid item xs={6}>
                 <ShippingSchedule
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"SHIPPING SCHEDULE"}
+                  header={t("fg-w-h.shipping-schedule")}
                 />
               </Grid>
               <Grid item xs={6}>
                 <FinishedGoodWHEscalation
                   customStyle={SET_FULL_SCREEN_LAPTOP}
-                  header={"FINISHED GOODS W/H ESCALATION"}
+                  header={t("fg-w-h.finished-goods")}
                 />
               </Grid>
             </Grid>

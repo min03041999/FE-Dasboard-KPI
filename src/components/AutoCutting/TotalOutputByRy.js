@@ -2,9 +2,11 @@ import React from "react";
 import Card from "../Card";
 import Title from "../Title";
 import DataTable from "../DataTable";
-import { HEADER_TOTAL_OUTPUT_BY_RY } from "../../data";
+// import { HEADER_TOTAL_OUTPUT_BY_RY } from "../../data";
 import { Box } from "@mui/material";
 import { tranformed_date } from "../../utils/transformed";
+
+import { useTranslation } from "react-i18next";
 
 const TotalOutputByRy = (props) => {
   const {
@@ -17,6 +19,8 @@ const TotalOutputByRy = (props) => {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) / 2 - 24),
   };
+
+  const [t] = useTranslation("global");
 
   const DATA_GET_MATERIAL_ON_GOING = materialOnGoing.map((data) => {
     return {
@@ -45,6 +49,18 @@ const TotalOutputByRy = (props) => {
       ongoing: data.ongoing,
     };
   });
+
+  const HEADER_TOTAL_OUTPUT_BY_RY = [
+    t("auto-cutting.total-output-by-ry-ry"),
+    t("auto-cutting.total-output-by-ry-art"),
+    t("auto-cutting.total-output-by-ry-model-name"),
+    t("auto-cutting.total-output-by-ry-line"),
+    t("auto-cutting.total-output-by-ry-pro-date"),
+    t("auto-cutting.total-output-by-ry-target"),
+    t("auto-cutting.total-output-by-ry-actual"),
+    t("auto-cutting.total-output-by-ry-total-component"),
+    t("auto-cutting.total-output-by-ry-on-going"),
+  ];
 
   return (
     <Card customStyle={customStyle}>

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { FINISH_GOOD_WH, HEADER_SHIPPING_SCHEDULE } from "../../data";
+// import { FINISH_GOOD_WH, HEADER_SHIPPING_SCHEDULE } from "../../data";
 import DataTable from "../DataTable";
 import moment from "moment";
 import { fgwhApi } from "../../api/FGWH/fgwhApi";
+
+import { useTranslation } from "react-i18next";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -17,6 +19,7 @@ function TabShippingSchedule(props) {
   const { setHeightTable } = props;
   const [value, setValue] = useState(0);
   const [shippings, setShippings] = useState([]);
+  const [t] = useTranslation("global");
 
   const today = moment();
   //check pass sunday
@@ -94,6 +97,27 @@ function TabShippingSchedule(props) {
       SHIPPED_STATUS: data.SHIPPED_STATUS,
     };
   });
+
+  const HEADER_SHIPPING_SCHEDULE = [
+    t("fg-w-h.shipping-schedule-ry"),
+    t("fg-w-h.shipping-schedule-po"),
+    t("fg-w-h.shipping-schedule-model-name"),
+    t("fg-w-h.shipping-schedule-article"),
+    t("fg-w-h.shipping-schedule-contry"),
+    t("fg-w-h.shipping-schedule-qty"),
+    t("fg-w-h.shipping-schedule-scan-qty"),
+    t("fg-w-h.shipping-schedule-unscan"),
+    t("fg-w-h.shipping-schedule-fgt"),
+    t("fg-w-h.shipping-schedule-bonding"),
+    t("fg-w-h.shipping-schedule-cma"),
+    t("fg-w-h.shipping-schedule-a01"),
+    t("fg-w-h.shipping-schedule-cpsia"),
+    t("fg-w-h.shipping-schedule-result"),
+    t("fg-w-h.shipping-schedule-fg-status"),
+    t("fg-w-h.shipping-schedule-line"),
+    t("fg-w-h.shipping-schedule-location"),
+    t("fg-w-h.shipping-schedule-shipped-status"),
+  ];
   return (
     <Box sx={{ width: "100%", height: "93%" }}>
       <Box
@@ -120,6 +144,7 @@ function TabShippingSchedule(props) {
             textAlign: "center",
           }}
           customTextStyle={{ whiteSpace: "nowrap" }}
+          alignText="center"
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
@@ -133,6 +158,7 @@ function TabShippingSchedule(props) {
             textAlign: "center",
           }}
           customTextStyle={{ whiteSpace: "nowrap" }}
+          alignText="center"
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
@@ -146,6 +172,7 @@ function TabShippingSchedule(props) {
             textAlign: "center",
           }}
           customTextStyle={{ whiteSpace: "nowrap" }}
+          alignText="center"
         />
       </CustomTabPanel>
     </Box>

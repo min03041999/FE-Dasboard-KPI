@@ -10,16 +10,20 @@ import {
   ResponsiveContainer,
   XAxis,
 } from "recharts";
-import { FINISH_GOOD_WH } from "../../data";
-
+// import { FINISH_GOOD_WH } from "../../data";
+import { useTranslation } from "react-i18next";
 const colors = ["#fb4343", "#a0d468", "#ffce54", "#118dff", "#ff5d5d"];
 
 const RepackingReason = (props) => {
   const { customStyle, header, fgwhData } = props;
+  const [t] = useTranslation("global");
+
+  console.log(fgwhData);
   const setHeight = {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 100),
   };
+
   return (
     <Card customStyle={customStyle}>
       <Title name={header} customStyle={{ textAlign: "center" }} />
@@ -69,7 +73,7 @@ const RepackingReason = (props) => {
         </Box>
       </Box>
       <Typography fontWeight={500} textAlign={"center"}>
-        TOP 5 DEFECT REASON BY PAIRS
+        {t("fg-w-h.repacking-reason-top-5")}
       </Typography>
     </Card>
   );

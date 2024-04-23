@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumb";
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 
 import OutputByLine from "../components/StockFitting/OutputByLine";
 
@@ -10,6 +10,8 @@ import StoplineTop3Defect from "../components/StockFitting/StoplineTop3Defect";
 import HourlyOutputByLine from "../components/StockFitting/HourlyOutputByLine";
 import TotalOutputByRY from "../components/StockFitting/TotalOutputByRY";
 import { stockFittingApi } from "../api/StockFitting/stockFittingApi";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const StockFittingScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -64,10 +66,45 @@ const StockFittingScreen = () => {
 
   const RFT_BY_LINE = [...rftByLineData];
 
+  const [t] = useTranslation("global");
+
   return (
     <Box component={"div"} className="stockfitting-screen">
       <Box component={"div"}>
-        <Breadcrumb>Stockfitting</Breadcrumb>
+        <Breadcrumb>
+          {t("stockfitting.name")}{" "}
+          <Button
+            component={Link}
+            variant="contained"
+            sx={{
+              bgcolor: "#82ca9d",
+              marginRight: 2,
+              marginLeft: 2,
+              ":hover": {
+                bgcolor: "#82ca9d",
+                color: "#fff",
+                opacity: 0.8,
+              },
+            }}
+          >
+            {t("stockfitting.name")}
+          </Button>
+          <Button
+            component={Link}
+            variant="contained"
+            sx={{
+              bgcolor: "#82ca9d",
+              ":hover": {
+                bgcolor: "#82ca9d",
+                color: "#fff",
+                opacity: 0.8,
+              },
+            }}
+            to={"/downtime"}
+          >
+            {t("stockfitting.downtime")}
+          </Button>
+        </Breadcrumb>
       </Box>
 
       <Box
@@ -88,7 +125,7 @@ const StockFittingScreen = () => {
             >
               <Grid item xs={4}>
                 <OutputByLine
-                  header={"OUTPUT BY LINE"}
+                  header={t("stockfitting.output-by-line")}
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                   setHeightChart={SET_HEIGHT_CHART}
                   data={tranformed_output}
@@ -96,7 +133,7 @@ const StockFittingScreen = () => {
               </Grid>
               <Grid item xs={4}>
                 <RFTByLine
-                  header={"RFT BY LINE"}
+                  header={t("stockfitting.rft-by-line")}
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                   setHeightChart={SET_HEIGHT_CHART}
                   data={RFT_BY_LINE}
@@ -104,7 +141,7 @@ const StockFittingScreen = () => {
               </Grid>
               <Grid item xs={4}>
                 <StoplineTop3Defect
-                  header={"STOPLINE TOP 3 DEFECT"}
+                  header={t("stockfitting.stopline-top-3-defect")}
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                 />
               </Grid>
@@ -118,14 +155,14 @@ const StockFittingScreen = () => {
             >
               <Grid item xs={6}>
                 <HourlyOutputByLine
-                  header={"HOURLY OUTPUT BY LINE"}
+                  header={t("stockfitting.hourly-output-by-line")}
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                   hourlyOutputByLineData={hourlyOutputByLineData}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TotalOutputByRY
-                  header={"TOTAL OUTPUT BY RY"}
+                  header={t("stockfitting.total-output-by-ry")}
                   customStyle={SET_FULL_SCREEN_LAPTOP}
                   totalOutputByRyData={totalOutputByRyData}
                 />

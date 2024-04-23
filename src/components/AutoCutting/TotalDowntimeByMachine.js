@@ -5,7 +5,13 @@ import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from "recharts";
 import { Box, Typography } from "@mui/material";
 
 const TotalDowntimeByMachine = (props) => {
-  const { customStyle, header, setHeightChart, autoCuttingData = [] } = props;
+  const {
+    customStyle,
+    header,
+    setHeightChart,
+    autoCuttingData = [],
+    unit,
+  } = props;
 
   return (
     <Card customStyle={customStyle}>
@@ -24,7 +30,7 @@ const TotalDowntimeByMachine = (props) => {
             sx={{ textDecoration: "underline" }}
             color="#049962"
           >
-            UNIT:MINUTE
+            {unit}
           </Typography>
         </Box>
         <ResponsiveContainer width="100%" height={setHeightChart}>

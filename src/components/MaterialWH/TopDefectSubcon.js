@@ -1,9 +1,17 @@
 import React from "react";
 import Card from "../Card";
 import DefectTable from "./DefectTable";
+import { useTranslation } from "react-i18next";
 
 const TopDefectSubcon = (props) => {
-  const { customStyle, header, data } = props;
+  const { customStyle, data } = props;
+  const [t] = useTranslation("global");
+
+  const HEADER_N761 = [
+    t("material-wh.top-defect-subcon"),
+    t("material-wh.common-defect-material"),
+    t("material-wh.common-defect"),
+  ];
 
   const data_top_3_subcon = data?.map((item) => {
     return {
@@ -17,7 +25,7 @@ const TopDefectSubcon = (props) => {
 
   return (
     <Card customStyle={customStyle}>
-      <DefectTable header={header} data={data_top_3_subcon} />
+      <DefectTable header={HEADER_N761} data={data_top_3_subcon} />
     </Card>
   );
 };

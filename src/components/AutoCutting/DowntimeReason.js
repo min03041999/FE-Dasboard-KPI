@@ -3,8 +3,11 @@ import Card from "../Card";
 import Title from "../Title";
 import { Box, Typography } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 const DowntimeReason = (props) => {
-  const { customStyle, header, autoCuttingData = [] } = props;
+  const { customStyle, header, autoCuttingData = [], unit } = props;
+  const [t] = useTranslation("global");
 
   const totalStartup = autoCuttingData?.reduce(
     (acc, item) => acc + item.StartUp,
@@ -38,27 +41,27 @@ const DowntimeReason = (props) => {
 
   const downtimeReasonData = [
     {
-      title: "Breakdown",
+      title: t("auto-cutting.downtime-reason-breakdown"),
       percentWidth: percentBreakDown,
       totalLabel: totalBreakDown,
     },
     {
-      title: "Changeover",
+      title: t("auto-cutting.downtime-reason-changeover"),
       percentWidth: percentChangeOver,
       totalLabel: totalChangeOver,
     },
     {
-      title: "Idle time",
+      title: t("auto-cutting.downtime-reason-idle-time"),
       percentWidth: percentIdle,
       totalLabel: totalIdle,
     },
     {
-      title: "Shutdown",
+      title: t("auto-cutting.downtime-reason-shutdown"),
       percentWidth: percentShutDown,
       totalLabel: totalShutDown,
     },
     {
-      title: "Start up",
+      title: t("auto-cutting.downtime-reason-start-up"),
       percentWidth: percentStartUp,
       totalLabel: totalStartup,
     },
@@ -76,7 +79,7 @@ const DowntimeReason = (props) => {
             sx={{ textDecoration: "underline" }}
             color="#049962"
           >
-            UNIT:MINUTE
+            {unit}
           </Typography>
         </Box>
         <Box

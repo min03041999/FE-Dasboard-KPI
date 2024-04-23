@@ -3,9 +3,12 @@ import Card from "../Card";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import Title from "../Title";
 
+import { useTranslation } from "react-i18next";
+
 const OverallOEECard = (props) => {
   const { customStyle, autoCuttingData = [] } = props;
   const setHeight = parseFloat(parseInt(customStyle?.height) / 3 - 10.5);
+  const [t] = useTranslation("global");
 
   const totalUptime = autoCuttingData?.reduce(
     (acc, item) => acc + item.Operating,
@@ -35,25 +38,25 @@ const OverallOEECard = (props) => {
 
   const dataOverall = [
     {
-      header: "AVAILABILITY",
-      label: "UPTIME",
-      lables: "AVAILABLE TIME",
+      header: t("auto-cutting.availability"),
+      label: t("auto-cutting.availability-uptime"),
+      lables: t("auto-cutting.availability-available-time"),
       labelNumber: totalUptime,
       labelNumbers: totalAvailableTime,
       backgroundColor: "#82adf9",
     },
     {
-      header: "PERFORMANCE",
-      label: "TOTAL ACTUAL OUTPUT",
-      lables: "TOTAL THEORETICAL OUTPUT",
+      header: t("auto-cutting.performance"),
+      label: t("auto-cutting.performance-total-actual-output"),
+      lables: t("auto-cutting.performance-total-theoretical-output"),
       labelNumber: totalActualOutput,
       labelNumbers: totalTheoreticalOutput,
       backgroundColor: "#82ca9d",
     },
     {
-      header: "QUANLITY",
-      label: "GOOD PAIRS",
-      lables: "TOTAL PAIRS",
+      header: t("auto-cutting.quantity"),
+      label: t("auto-cutting.quantity-good-pairs"),
+      lables: t("auto-cutting.quantity-total-pairs"),
       labelNumber: goodPairs,
       labelNumbers: totalPairs,
       backgroundColor: "#8884d8",

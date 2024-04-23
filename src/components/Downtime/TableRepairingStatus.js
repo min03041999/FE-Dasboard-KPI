@@ -22,9 +22,10 @@ const TableBodyStyle = {
 
 const TextStyle = {
   fontWeight: "600",
+  fontSize: 12,
 };
 
-export default function DataTable(props) {
+export default function TableRepairingStatus(props) {
   const {
     header,
     data,
@@ -34,30 +35,6 @@ export default function DataTable(props) {
     customTextStyle,
     alignText,
   } = props;
-
-  const checkImage = (key, check) => {
-    if (key === "picture") {
-      if (check) {
-        return (
-          <img
-            style={{ width: "100%", maxHeight: "70px" }}
-            src={check}
-            alt={key}
-          />
-        );
-      } else {
-        return (
-          <img
-            style={{ width: "100%", maxHeight: "70px" }}
-            src={"http://192.168.30.19:5000/shoes-photos/no-image.jpg"}
-            alt="no-img"
-          />
-        );
-      }
-    } else {
-      return check;
-    }
-  };
 
   return (
     <TableContainer sx={{ width: "100%", height: height }}>
@@ -84,16 +61,21 @@ export default function DataTable(props) {
               sx={{ ...TableBodyStyle, ...customTableBodyStyle }}
             >
               {Object.keys(item).map((key, index) => (
-                <TableCell key={index} align={alignText ? "center" : "left"}>
-                  <Typography
-                    variant="overline"
-                    sx={{
-                      ...TextStyle,
-                      ...customTextStyle,
-                    }}
-                  >
-                    {checkImage(key, item[key])}
-                  </Typography>
+                <TableCell
+                  key={index}
+                  align={alignText ? "center" : "left"}
+                  sx={{
+                    ...TextStyle,
+                    ...customTextStyle,
+                    color:
+                      item?.Repairing === null
+                        ? "#cd3d3d"
+                        : item?.Done === ""
+                        ? "#ebb43e"
+                        : "#70b44c",
+                  }}
+                >
+                  {item[key]}
                 </TableCell>
               ))}
             </TableRow>

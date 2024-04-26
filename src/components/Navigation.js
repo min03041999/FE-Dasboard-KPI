@@ -40,7 +40,7 @@ const ItemActiveStyle = {
 // const LINE = ["A1-1", "A1-2", "A1-3", "A1-4", "A1-5", "A1-6"];
 
 const Navigation = (props) => {
-  const { navigate, setNavigate, date, setDate } = props;
+  const { navigate, setNavigate, date, setDate, isState } = props;
   const [floor, setFloor] = useState([]);
   const [line, setLine] = useState([]);
 
@@ -98,7 +98,10 @@ const Navigation = (props) => {
 
   const onActiveFactory = (e) => {
     const factory = e.target.innerText;
-    if (factory) setNavigate({ ...navigate, floor: "", line: "", section: "" });
+
+    if (factory) {
+      setNavigate({ ...navigate, floor: "", line: "", section: "" });
+    }
   };
 
   const onActiveFloor = (floor) => {
@@ -127,7 +130,16 @@ const Navigation = (props) => {
           <ChevronRightIcon />
         </div>
         <div style={ItemActiveStyle}>
-          <Typography className="navigation-text" onClick={onActiveFactory}>
+          <Typography
+            className="navigation-text"
+            onClick={
+              isState
+                ? onActiveFactory
+                : () => {
+                    console.log("factory");
+                  }
+            }
+          >
             {FACTORY}
           </Typography>
         </div>
@@ -146,11 +158,13 @@ const Navigation = (props) => {
           </Typography>{" "}
           <ChevronRightIcon />
         </div>
-        {floor.map((item, index) => (
+        {floor?.map((item, index) => (
           <div
             style={navigate.floor === item ? ItemActiveStyle : ItemStyle}
             key={index}
-            onClick={() => onActiveFloor(item)}
+            onClick={
+              isState ? () => onActiveFloor(item) : () => console.log("floor")
+            }
           >
             <Typography className="navigation-text">{item}</Typography>
           </div>
@@ -170,11 +184,17 @@ const Navigation = (props) => {
           </Typography>{" "}
           <ChevronRightIcon />
         </div>
-        {line.map((item, index) => (
+        {line?.map((item, index) => (
           <div
             style={navigate.line === item ? ItemActiveStyle : ItemStyle}
             key={index}
-            onClick={() => onActiveLine(item)}
+            onClick={
+              isState
+                ? () => onActiveLine(item)
+                : () => {
+                    console.log("line");
+                  }
+            }
           >
             <Typography className="navigation-text">{item}</Typography>
           </div>
@@ -211,7 +231,7 @@ const Navigation = (props) => {
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 2, md: 2 }}
             >
-              {assembly_stitching.map((item, index) => (
+              {assembly_stitching?.map((item, index) => (
                 <div
                   style={
                     navigate.section === item.id
@@ -219,7 +239,11 @@ const Navigation = (props) => {
                       : { ...ItemStyle, width: "70px" }
                   }
                   key={index}
-                  onClick={() => onActiveSection(item.id)}
+                  onClick={
+                    isState
+                      ? () => onActiveSection(item.id)
+                      : () => console.log("section")
+                  }
                 >
                   <Typography
                     className="navigation-text"

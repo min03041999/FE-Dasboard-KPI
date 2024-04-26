@@ -17,6 +17,8 @@ const HourlyOutputByLine = (props) => {
     "15:30 16:30",
   ];
 
+  // console.log(hourlyOutputByLineData);
+
   const DATA = [...hourlyOutputByLineData];
 
   const transformed_data = DATA?.map((item) => {
@@ -24,9 +26,9 @@ const HourlyOutputByLine = (props) => {
       line: item.name_machine,
       target: item.Target,
       actual: {
-        "7:30-8:30": item.h1,
-        "8:30-9:30": item.h2,
-        "9:30-10:30": item.h3,
+        "07:30-08:30": item.h1,
+        "08:30-09:30": item.h2,
+        "09:30-10:30": item.h3,
         "10:30-11:30": item.h4,
         "12:30-13:30": item.h5,
         "13:30-14:30": item.h6,
@@ -35,6 +37,8 @@ const HourlyOutputByLine = (props) => {
       },
     };
   });
+
+  console.log(transformed_data);
 
   const formatCheck = (actual, target) => {
     return actual < target

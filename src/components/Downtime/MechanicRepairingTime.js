@@ -23,13 +23,15 @@ const MechanicRepairingTime = (props) => {
     };
   }, []);
 
-  const transformedData = data.map((item) => {
-    return {
-      name: item.name,
-      repairingtime: item.repairing,
-      waitingtime: item.waiting,
-    };
-  });
+  const transformedData = Array.isArray(data)
+    ? data.map((item) => {
+        return {
+          name: item.name,
+          repairingtime: item.repairing,
+          waitingtime: item.waiting,
+        };
+      })
+    : [];
 
   const SET_HEIGHT_CHART =
     screenHeight > 730 ? screenHeight / 3 - 40 : 300 - 40;

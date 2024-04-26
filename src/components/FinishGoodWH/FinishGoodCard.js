@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import Card from "../Card";
 import Title from "../Title";
+import FadeInNumber from "../../utils/animation";
 
 const FinishGoodCard = (props) => {
   const { name, titleNumber, setHeight } = props;
@@ -19,8 +20,8 @@ const FinishGoodCard = (props) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Typography variant="h5" component="h5" fontWeight={600}>
-              {titleNumber} PO
+            <Typography variant="h3" component="h5" fontWeight={600}>
+              <FadeInNumber n={titleNumber} /> PO
             </Typography>
           </Box>
         </Box>

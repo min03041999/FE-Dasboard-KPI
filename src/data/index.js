@@ -4016,3 +4016,167 @@ export const DATA_REPAIRING_TIME = [
     Done: "11:30 10 min Thao-3891",
   },
 ];
+
+// const EFFICIENCY_BY_FLOOR = [
+//   { lineAlias: "AF1", efficiency: 70.2, target: 60.5 },
+//   { lineAlias: "AF2", efficiency: 65.9, target: 60.5 },
+//   { lineAlias: "AF4", efficiency: 71.2, target: 60.5 },
+//   { lineAlias: "BF2", efficiency: 74.1, target: 60.5 },
+//   { lineAlias: "CF2", efficiency: 68.5, target: 60.5 },
+//   { lineAlias: "DF1", efficiency: 67.2, target: 60.5 },
+//   { lineAlias: "DF3", efficiency: 74.1, target: 60.5 },
+// ];
+
+// const RFT_BY_FLOOR = [
+//   { lineAlias: "AF1", rft: 83.9, target: 90 },
+//   { lineAlias: "AF2", rft: 83.39, target: 90 },
+//   { lineAlias: "AF4", rft: 87.37, target: 90 },
+//   { lineAlias: "BF2", rft: 85.14, target: 90 },
+//   { lineAlias: "CF2", rft: 83.55, target: 90 },
+//   { lineAlias: "DF1", rft: 85.04, target: 90 },
+//   { lineAlias: "DF3", rft: 88.02, target: 90 },
+// ];
+
+// const STOP_LINE_LIST = [
+//   { lineAlias: "AF1", SL_NgungChuyen: 1 },
+//   { lineAlias: "AF2", SL_NgungChuyen: 0 },
+//   { lineAlias: "AF4", SL_NgungChuyen: 3 },
+//   { lineAlias: "BF2", SL_NgungChuyen: 1 },
+//   { lineAlias: "CF2", SL_NgungChuyen: 0 },
+//   { lineAlias: "DF1", SL_NgungChuyen: 0 },
+//   { lineAlias: "DF3", SL_NgungChuyen: 1 },
+// ];
+
+// const RFT_BY_THE_FLOOR = [
+//   {
+//     "07:30-08:30": 79.4,
+//     "08:30-09:30": 79.2,
+//     "09:30-10:30": 77.2,
+//     "10:30-11:30": 75.8,
+//     "11:30-12:30": 0,
+//     "12:30-13:30": 80.3,
+//     "13:30-14:30": 78.2,
+//     "14:30-15:30": 80.8,
+//     "15:30-16:30": 75,
+//   },
+// ];
+
+// const EFF_BY_THE_FLOOR = [
+//   {
+//     "07:30-08:30": 79.4,
+//     "08:30-09:30": 79.2,
+//     "09:30-10:30": 77.2,
+//     "10:30-11:30": 75.8,
+//     "11:30-12:30": 0,
+//     "12:30-13:30": 80.3,
+//     "13:30-14:30": 78.2,
+//     "14:30-15:30": 80.8,
+//     "15:30-16:30": 75,
+//   },
+// ];
+
+// const actualStitching = [
+//   {
+//     "07:30-08:30": 20,
+//     "08:30-09:30": 0,
+//   },
+// ];
+
+// const actualAssembly = [
+//   {
+//     "07:30-08:30": 50,
+//     "08:30-09:30": 50,
+//     "09:30-10:30": 50,
+//     "10:30-11:30": 77,
+//     "13:30-14:30": 62,
+//     "15:30-16:30": 224,
+//   },
+// ];
+
+// let OUTPUT_BY_THE_HOURS =
+//   navigate?.section === "stitching" ? actualStitching : actualAssembly;
+
+// const worker = {
+//   stitching: 0,
+//   assembly: 55,
+// };
+
+// let WORKER =
+//   navigate?.section === "stitching" ? worker.stitching : worker.assembly;
+
+// const target = {
+//   targetStitching: 0,
+//   targetAssembly: 1800,
+// };
+
+// const TARGET =
+//     navigate?.section === "stitching"
+//       ? target.targetStitching
+//       : target.targetAssembly;
+
+//   const SHOE_DATA = [
+//     {
+//       article: "IE2317",
+//       shoesName: "BRAVADA 2.0 MID PLATFORM",
+//       purchaseOrder: "FX",
+//       img: "http://192.168.0.96:5000/shoes-photos/IE2317.bmp",
+//       stitchingLc: "95.36",
+//       assemblyLc: "65.1",
+//       ry: "A2402-151",
+//     },
+//     {
+//       article: "IE2310",
+//       shoesName: "BRAVADA 2.0 PLATFORM",
+//       purchaseOrder: "P2",
+//       img: "http://192.168.0.96:5000/shoes-photos/IE2310.bmp",
+//       stitchingLc: "89.65",
+//       assemblyLc: "65.1",
+//       ry: "A2403-081",
+//     },
+//   ];
+
+//   const TOP3_DEFECT = [
+//     {
+//       Code: "500-3",
+//       NameVit: "HO KEO",
+//       NameEng: "BONDING GAP",
+//       Qty: 132,
+//       TQty: "31.28%",
+//       Picture:
+//         "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
+//       Action_Plan: null,
+//       RowNumber: "1",
+//     },
+//     {
+//       Code: "400-3",
+//       NameVit: "KEO CAO/LEM KEO HOAC LEM XU LI",
+//       NameEng: "OVER CEMENTING OR PRIMING",
+//       Qty: 64,
+//       TQty: "15.17%",
+//       Picture:
+//         "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
+//       Action_Plan: null,
+//       RowNumber: "2",
+//     },
+//     {
+//       Code: "400-1",
+//       NameVit: "NHIEM BAN ( VET DO)",
+//       NameEng: "CONTAMINATION(Stains)",
+//       Qty: 55,
+//       TQty: "13.03%",
+//       Picture:
+//         "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
+//       Action_Plan: null,
+//       RowNumber: "3",
+//     },
+//     {
+//       Code: "",
+//       NameVit: "Khác",
+//       NameEng: "Others",
+//       Qty: 171,
+//       TQty: "40.52%",
+//       Picture: "",
+//       Action_Plan: "",
+//       RowNumber: "4",
+//     },
+//   ];

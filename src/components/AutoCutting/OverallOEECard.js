@@ -4,11 +4,13 @@ import { Box, Divider, Grid, Typography } from "@mui/material";
 import Title from "../Title";
 
 import { useTranslation } from "react-i18next";
+import FadeInNumber from "../../utils/animation";
 
 const OverallOEECard = (props) => {
   const { customStyle, autoCuttingData = [] } = props;
   const setHeight = parseFloat(parseInt(customStyle?.height) / 3 - 10.5);
   const [t] = useTranslation("global");
+  const languages = localStorage.getItem("languages");
 
   const totalUptime = autoCuttingData?.reduce(
     (acc, item) => acc + item.Operating,
@@ -65,7 +67,7 @@ const OverallOEECard = (props) => {
 
   return (
     <Grid container spacing={2}>
-      {dataOverall.map((data, index) => (
+      {dataOverall?.map((data, index) => (
         <Grid item xs={12} key={index}>
           <Card
             customStyle={{
@@ -83,10 +85,18 @@ const OverallOEECard = (props) => {
                   <Grid item xs={5}>
                     <Typography
                       fontSize={13}
-                      fontWeight={500}
+                      fontWeight={600}
                       textAlign={"center"}
                     >
-                      {data.labelNumber} <br /> {data.label}
+                      <span
+                        style={{
+                          fontSize: languages === "TW" ? "3rem" : "1rem",
+                        }}
+                      >
+                        <FadeInNumber n={data.labelNumber} />
+                      </span>
+                      <br />
+                      <Typography fontWeight={600}>{data.label}</Typography>
                     </Typography>
                   </Grid>
                   <Grid
@@ -108,10 +118,18 @@ const OverallOEECard = (props) => {
                   <Grid item xs={5}>
                     <Typography
                       fontSize={13}
-                      fontWeight={500}
+                      fontWeight={600}
                       textAlign={"center"}
                     >
-                      {data.labelNumbers} <br /> {data.lables}
+                      <span
+                        style={{
+                          fontSize: languages === "TW" ? "3rem" : "1rem",
+                        }}
+                      >
+                        <FadeInNumber n={data.labelNumbers} />
+                      </span>
+                      <br />
+                      <Typography fontWeight={600}>{data.lables}</Typography>
                     </Typography>
                   </Grid>
                 </Grid>

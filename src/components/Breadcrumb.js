@@ -23,7 +23,7 @@ const ColumnStyle = {
 const LanguagesListStyle = {
   position: "fixed",
   zIndex: "9999",
-  top: "5%",
+  top: "50px",
   right: "3%",
   border: "1px solid #fff",
   borderRadius: "8px",

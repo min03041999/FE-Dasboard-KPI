@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import Title from "../Title";
 import FinishGoodCard from "./FinishGoodCard";
 import { useTranslation } from "react-i18next";
+import FadeInNumber from "../../utils/animation";
 
 const StatisticsDashboard = (props) => {
   const { customStyle, fgwhData } = props;
@@ -51,12 +52,13 @@ const StatisticsDashboard = (props) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Typography variant="h5" component="h5" fontWeight={600}>
-                    {fgwhData.MDP[0].MDPPercent}%
+                  <Typography variant="h3" component="h5" fontWeight={600}>
+                    <FadeInNumber n={fgwhData.MDP[0].MDPPercent} />%
                   </Typography>
                 </Box>
-                <Typography variant="h5" fontWeight={600}>
-                  {t("fg-w-h.mdp-target")} {fgwhData.MDP[0].MDPTarget}%
+                <Typography variant="h4" fontWeight={600}>
+                  {t("fg-w-h.mdp-target")}{" "}
+                  <FadeInNumber n={fgwhData.MDP[0].MDPTarget} />%
                 </Typography>
               </Box>
             </Card>

@@ -34,6 +34,8 @@ const TierMeetingScreen = () => {
 
   const [t] = useTranslation("global");
 
+  // console.log(tierMeetingData);
+
   return (
     <Box component={"div"} className="tier-meeting-screen">
       <Box component={"div"}>

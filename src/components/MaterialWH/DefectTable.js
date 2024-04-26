@@ -59,7 +59,9 @@ export default function DefectTable(props) {
                     <>
                       {Array.from(
                         new Set(
-                          item.Materials?.map((itemMat) => itemMat.Material_Name)
+                          item.Materials?.map(
+                            (itemMat) => itemMat.Material_Name
+                          )
                         )
                       )?.map((uniqueMat, i) => (
                         <Box key={i} display="flex">

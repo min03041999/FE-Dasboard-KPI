@@ -18,7 +18,7 @@ const PieSimple = (props) => {
           style={{ width: "100%", height: "100%" }}
           outerRadius={70}
         >
-          {data.map((entry, index) =>
+          {data?.map((entry, index) =>
             entry.value !== 0 ? (
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ) : (

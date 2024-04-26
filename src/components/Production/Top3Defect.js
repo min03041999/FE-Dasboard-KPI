@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../Card";
 import Title from "../Title";
 import DataTable from "../DataTable";
@@ -7,9 +7,15 @@ import PieSimple from "../PieSimple";
 import PieLegendIcon from "../../icons/PieLegendIcon";
 
 import { Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const Top3Defect = (props) => {
-  const { header, data, setHeightChart } = props;
+  const { header, data, line, setHeightChart } = props;
+  const [t] = useTranslation("global");
+
+  useEffect(() => {
+    console.log(data);
+  }, [data, line]);
 
   //   const colorDefectName = ["red", "darkgreen", "yellow", "lightgreen"];
   // const colorPieChart = ["#5dd15b", "#46583e", "#ced11e", "#f33434"];
@@ -34,7 +40,12 @@ const Top3Defect = (props) => {
     percentData[percentData.length - 1].value -= excess;
   }
 
-  const HEADER_TABLE = ["Defect Name", "Action plan & Follow up", "Picture"];
+  // const HEADER_TABLE = ["Defect Name", "Action plan & Follow up", "Picture"];
+  const HEADER_TABLE = [
+    `${t("production.stopline-top-3-defect-defect-name")}`,
+    `${t("production.stopline-top-3-defect-action")}`,
+    `${t("production.stopline-top-3-defect-picture")}`,
+  ];
 
   const CUSTOM_DATA = data?.map((item) => {
     return {
@@ -46,7 +57,9 @@ const Top3Defect = (props) => {
         </span>
       ),
       action_name: item.Action_Plan,
-      picture: item.Picture,
+      picture: item.Picture
+        ? `http://192.168.30.19:5000/qip-defect-photos/` + item.Picture
+        : null,
     };
   });
 

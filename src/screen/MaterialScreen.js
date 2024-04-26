@@ -82,8 +82,12 @@ const MaterialScreen = () => {
     };
     getTop3Supplier();
     getTop3Subcon();
-    getMatCheckChart();
-    getLeatherChart();
+    setTimeout(() => {
+      getMatCheckChart();
+    }, 3000);
+    setTimeout(() => {
+      getLeatherChart();
+    }, 5000);
     getWhEscalation();
     getDailyLeather();
     getDailyMatQCCheck();

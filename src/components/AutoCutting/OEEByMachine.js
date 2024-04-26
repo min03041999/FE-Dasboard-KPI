@@ -15,7 +15,7 @@ const OEEByMachine = (props) => {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 40),
   };
-  const DATA_OEE_BY_MACHINE = autoCuttingData.map((data) => {
+  const DATA_OEE_BY_MACHINE = autoCuttingData?.map((data) => {
     return {
       Layer: data.Layer,
       Operating: data.Operating,

@@ -62,7 +62,7 @@ const MatCheckStatus = (props) => {
               gap: "10px",
             }}
           >
-            {PieLegend.map((item, i) => (
+            {PieLegend?.map((item, i) => (
               <PieLegendIcon
                 key={i}
                 color={item.color}

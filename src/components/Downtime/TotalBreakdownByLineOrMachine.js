@@ -5,7 +5,7 @@ import ChartByDowntime from "./ChartByDowntime";
 const TotalBreakdownByLineOrMachine = (props) => {
   const { customStyle, header, setHeightChart, data, titleTimes } = props;
 
-  const transformedData = data.map((item) => {
+  const transformedData = data?.map((item) => {
     return {
       name: item.floors,
       value: item.counts,
@@ -13,7 +13,7 @@ const TotalBreakdownByLineOrMachine = (props) => {
   });
 
   // console.log(transformedData);
-  const totalTime = transformedData.reduce(
+  const totalTime = transformedData?.reduce(
     (total, curr) => total + curr.value,
     0
   );

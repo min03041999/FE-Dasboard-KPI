@@ -10,7 +10,6 @@ import Slick from "../components/Slick";
 
 import { FACTORY } from "../utils/env";
 import { IS_TARGET_EFF_RFT } from "../utils/base";
-import { transformedData_EFF, transformedData_RFT } from "../utils/transformed";
 
 import EFFByFloor from "../components/Production/EFFByFloor";
 import RFTByFloor from "../components/Production/RFTByFloor";
@@ -30,8 +29,16 @@ import AnalyzerTopLine from "../components/Production/AnalyzerTopLine";
 import AnalyzerTotalOutput from "../components/Production/AnalyzerTotalOutput";
 import AnalyzerTarget from "../components/Production/AnalyzerTaget";
 
+import { useTranslation } from "react-i18next";
+import { productionApi } from "../api/Production/productionApi";
+
+import CircularProgress from "@mui/material/CircularProgress";
+
 const ProductionScreen = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [t] = useTranslation("global");
+
+  const [isState, setIsState] = useState(false);
   const [navigate, setNavigate] = useState({
     factory: FACTORY,
     floor: "",
@@ -39,281 +46,51 @@ const ProductionScreen = () => {
     section: "",
   });
   const [date, setDate] = useState(dayjs(new Date()));
+  const [productionData, setProductionData] = useState([]);
+  const [stopLineTop3, setStopLineTop3] = useState([]);
+  const [getEFF, setGetEFF] = useState("0%");
+  const [getRFT, setRFT] = useState("0%");
+  const DATA_PRODUCTION = productionData?.floorData;
+  const stopLineList = Array.isArray(productionData?.stopLineData)
+    ? productionData?.stopLineData
+    : [];
 
-  const EFFICIENCY_BY_FLOOR = [
-    { lineAlias: "AF1", efficiency: 70.2, target: 60.5 },
-    { lineAlias: "AF2", efficiency: 65.9, target: 60.5 },
-    { lineAlias: "AF4", efficiency: 71.2, target: 60.5 },
-    { lineAlias: "BF2", efficiency: 74.1, target: 60.5 },
-    { lineAlias: "CF2", efficiency: 68.5, target: 60.5 },
-    { lineAlias: "DF1", efficiency: 67.2, target: 60.5 },
-    { lineAlias: "DF3", efficiency: 74.1, target: 60.5 },
-  ];
+  useEffect(() => {
+    let dates = dayjs(date).format("YYYY/MM/DD");
+    setIsState(false);
 
-  const RFT_BY_FLOOR = [
-    { lineAlias: "AF1", rft: 83.9, target: 90 },
-    { lineAlias: "AF2", rft: 83.39, target: 90 },
-    { lineAlias: "AF4", rft: 87.37, target: 90 },
-    { lineAlias: "BF2", rft: 85.14, target: 90 },
-    { lineAlias: "CF2", rft: 83.55, target: 90 },
-    { lineAlias: "DF1", rft: 85.04, target: 90 },
-    { lineAlias: "DF3", rft: 88.02, target: 90 },
-  ];
+    const getFactoryDataApi = async (dates, navigate) => {
+      let res = await productionApi.getProductionFactoryApi(
+        dates,
+        navigate.factory
+      );
 
-  const stopLineList = [
-    { lineAlias: "AF1", SL_NgungChuyen: 1 },
-    { lineAlias: "AF2", SL_NgungChuyen: 0 },
-    { lineAlias: "AF4", SL_NgungChuyen: 3 },
-    { lineAlias: "BF2", SL_NgungChuyen: 1 },
-    { lineAlias: "CF2", SL_NgungChuyen: 0 },
-    { lineAlias: "DF1", SL_NgungChuyen: 0 },
-    { lineAlias: "DF3", SL_NgungChuyen: 1 },
-  ];
+      setProductionData(res.data.data);
+      setIsState(true);
+    };
 
-  let chartData = [
-    { line: "AF1", stitching: 82.22, assembly: 334 },
-    { line: "AF2", stitching: 595.0, assembly: 412 },
-    { line: "AF4", stitching: 542.0, assembly: 430 },
-    { line: "BF2", stitching: 560.0, assembly: 413 },
-    { line: "CF2", stitching: 597.0, assembly: 388 },
-    { line: "DF1", stitching: 587.0, assembly: 389 },
-    { line: "DF3", stitching: 375.0, assembly: 371.0 },
-  ];
+    const getFloorDataApi = async (dates, navigate) => {
+      let res = await productionApi.getFloorDataApi(dates, navigate.floor);
+      setProductionData(res.data.data);
+      setIsState(true);
+    };
 
-  let tableData = [
-    {
-      line: "AF1",
-      target: 1140,
-      actual: {
-        "7:30-8:30": 1120,
-        "8:30-9:30": 1307,
-        "9:30-10:30": 1150,
-        "10:30-11:30": 1173,
-        "12:30-13:30": 1301,
-        "13:30-14:30": 1160,
-      },
-    },
-    {
-      line: "AF2",
-      target: 1140,
-      actual: {
-        "7:30-8:30": 1214,
-        "8:30-9:30": 1135,
-        "9:30-10:30": 1206,
-        "10:30-11:30": 1262,
-        "12:30-13:30": 1146,
-        "13:30-14:30": 1233,
-      },
-    },
-    {
-      line: "AF4",
-      target: 950,
-      actual: {
-        "7:30-8:30": 969,
-        "8:30-9:30": 1054,
-        "9:30-10:30": 974,
-        "10:30-11:30": 1015,
-        "12:30-13:30": 951,
-        "13:30-14:30": 996,
-      },
-    },
-    {
-      line: "BF2",
-      target: 1330,
-      actual: {
-        "7:30-8:30": 1435,
-        "8:30-9:30": 1420,
-        "9:30-10:30": 1439,
-        "10:30-11:30": 1515,
-        "12:30-13:30": 1444,
-        "13:30-14:30": 1493,
-      },
-    },
-    {
-      line: "CF2",
-      target: 1330,
-      actual: {
-        "7:30-8:30": 1507,
-        "8:30-9:30": 1486,
-        "9:30-10:30": 1482,
-        "10:30-11:30": 1425,
-        "12:30-13:30": 1450,
-        "13:30-14:30": 1480,
-      },
-    },
-    {
-      line: "DF1",
-      target: 1140,
-      actual: {
-        "7:30-8:30": 1249,
-        "8:30-9:30": 1299,
-        "9:30-10:30": 1227,
-        "10:30-11:30": 1164,
-        "12:30-13:30": 1153,
-        "13:30-14:30": 1285,
-      },
-    },
-    {
-      line: "DF3",
-      target: 1320,
-      actual: {
-        "7:30-8:30": 1295,
-        "8:30-9:30": 1492,
-        "9:30-10:30": 1398,
-        "10:30-11:30": 1304,
-        "12:30-13:30": 1443,
-        "13:30-14:30": 1326,
-      },
-    },
-  ];
+    const getStopLineTop3 = async (dates, navigate) => {
+      let res = await productionApi.getStopLineTop3(dates, navigate.line);
+      setStopLineTop3(res.data.data);
+      setIsState(true);
+    };
 
-  let OUTPUT_BY_FLOOR = [
-    { line: "AF1", actual: 7211, target: 9120, remaining: 1909 },
-    { line: "AF2", actual: 7196, target: 9120, remaining: 1924 },
-    { line: "AF4", actual: 5959, target: 7600, remaining: 1641 },
-    { line: "BF2", actual: 8746, target: 10640, remaining: 1894 },
-    { line: "CF2", actual: 8830, target: 10640, remaining: 1810 },
-    { line: "DF1", actual: 7377, target: 9120, remaining: 1743 },
-    { line: "DF3", actual: 8258, target: 10560, remaining: 2302 },
-  ];
+    if (navigate.floor === "") {
+      getFactoryDataApi(dates, navigate);
+    } else {
+      getFloorDataApi(dates, navigate);
 
-  let transformed_eff = transformedData_EFF(EFFICIENCY_BY_FLOOR);
-  let transformed_rft = transformedData_RFT(RFT_BY_FLOOR);
-
-  //Line
-  const RFT_BY_THE_FLOOR = [
-    {
-      "07:30-08:30": 79.4,
-      "08:30-09:30": 79.2,
-      "09:30-10:30": 77.2,
-      "10:30-11:30": 75.8,
-      "11:30-12:30": 0,
-      "12:30-13:30": 80.3,
-      "13:30-14:30": 78.2,
-      "14:30-15:30": 80.8,
-      "15:30-16:30": 75,
-    },
-  ];
-
-  const EFF_BY_THE_FLOOR = [
-    {
-      "07:30-08:30": 79.4,
-      "08:30-09:30": 79.2,
-      "09:30-10:30": 77.2,
-      "10:30-11:30": 75.8,
-      "11:30-12:30": 0,
-      "12:30-13:30": 80.3,
-      "13:30-14:30": 78.2,
-      "14:30-15:30": 80.8,
-      "15:30-16:30": 75,
-    },
-  ];
-
-  const actualStitching = [
-    {
-      "07:30-08:30": 20,
-      "08:30-09:30": 0,
-    },
-  ];
-
-  const actualAssembly = [
-    {
-      "07:30-08:30": 50,
-      "08:30-09:30": 50,
-      "09:30-10:30": 50,
-      "10:30-11:30": 77,
-      "13:30-14:30": 62,
-      "15:30-16:30": 224,
-    },
-  ];
-
-  let OUTPUT_BY_THE_HOURS =
-    navigate?.section === "stitching" ? actualStitching : actualAssembly;
-
-  const worker = {
-    stitching: 0,
-    assembly: 55,
-  };
-
-  let WORKER =
-    navigate?.section === "stitching" ? worker.stitching : worker.assembly;
-
-  const target = {
-    targetStitching: 0,
-    targetAssembly: 1800,
-  };
-
-  const TARGET =
-    navigate?.section === "stitching"
-      ? target.targetStitching
-      : target.targetAssembly;
-
-  const SHOE_DATA = [
-    {
-      article: "IE2317",
-      shoesName: "BRAVADA 2.0 MID PLATFORM",
-      purchaseOrder: "FX",
-      img: "http://192.168.0.96:5000/shoes-photos/IE2317.bmp",
-      stitchingLc: "95.36",
-      assemblyLc: "65.1",
-      ry: "A2402-151",
-    },
-    {
-      article: "IE2310",
-      shoesName: "BRAVADA 2.0 PLATFORM",
-      purchaseOrder: "P2",
-      img: "http://192.168.0.96:5000/shoes-photos/IE2310.bmp",
-      stitchingLc: "89.65",
-      assemblyLc: "65.1",
-      ry: "A2403-081",
-    },
-  ];
-
-  const TOP3_DEFECT = [
-    {
-      Code: "500-3",
-      NameVit: "HO KEO",
-      NameEng: "BONDING GAP",
-      Qty: 132,
-      TQty: "31.28%",
-      Picture:
-        "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
-      Action_Plan: null,
-      RowNumber: "1",
-    },
-    {
-      Code: "400-3",
-      NameVit: "KEO CAO/LEM KEO HOAC LEM XU LI",
-      NameEng: "OVER CEMENTING OR PRIMING",
-      Qty: 64,
-      TQty: "15.17%",
-      Picture:
-        "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
-      Action_Plan: null,
-      RowNumber: "2",
-    },
-    {
-      Code: "400-1",
-      NameVit: "NHIEM BAN ( VET DO)",
-      NameEng: "CONTAMINATION(Stains)",
-      Qty: 55,
-      TQty: "13.03%",
-      Picture:
-        "http://192.168.30.19:5000/qip-defect-photos/laiyih_LHG240323061_31_500-2_2024323913102807.jpg",
-      Action_Plan: null,
-      RowNumber: "3",
-    },
-    {
-      Code: "",
-      NameVit: "Khác",
-      NameEng: "Others",
-      Qty: 171,
-      TQty: "40.52%",
-      Picture: "",
-      Action_Plan: "",
-      RowNumber: "4",
-    },
-  ];
+      if (navigate.line !== "") {
+        getStopLineTop3(dates, navigate);
+      }
+    }
+  }, [navigate.factory, navigate.floor, navigate.line, date]);
 
   //Set Height
   useEffect(() => {
@@ -327,6 +104,8 @@ const ProductionScreen = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // console.log(dayjs(date).format("YYYY/MM/DD"));
 
   // SET FOR SLIDE 1
   const SET_FULL_SCREEN_LAPTOP =
@@ -352,208 +131,283 @@ const ProductionScreen = () => {
             : { position: "relative", height: "100%" }
         }
       >
-        <Breadcrumb>Prod. KPI Dashboard</Breadcrumb>
+        <Breadcrumb>{t("production.name")}</Breadcrumb>
         <Navigation
           navigate={navigate}
           setNavigate={setNavigate}
           date={date}
           setDate={setDate}
+          isState={isState}
         />
       </Box>
-
-      <Box component={"div"} className="production-screen-body">
-        {navigate.line === "" ? (
-          <Grid
-            container
-            spacing={{ xs: 2, md: 2 }}
-            columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
-          >
-            <Grid item xs={4}>
-              <EFFByFloor
-                customStyle={SET_FULL_SCREEN_LAPTOP}
-                setHeightChart={SET_HEIGHT_CHART}
-                header={"EFFICIENCY BY FLOOR"}
-                type={"eff"}
-                typeChart={"ColumnMixed"}
-                data={transformed_eff}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <RFTByFloor
-                customStyle={SET_FULL_SCREEN_LAPTOP}
-                setHeightChart={SET_HEIGHT_CHART}
-                header={"RFT BY FLOOR"}
-                type={"rft"}
-                typeChart={"ColumnMixed"}
-                data={transformed_rft}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={6}>
-                  <AnalyzerTarget
-                    customStyle={SET_FULL_SCREEN_LAPTOP_}
-                    header={"EFFICIENCY"}
-                    target={`BASE LINE: ${IS_TARGET_EFF_RFT.floor.eff}%`}
-                    data={"70%"}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={6}>
-                  <AnalyzerTarget
-                    customStyle={SET_FULL_SCREEN_LAPTOP_}
-                    header={"EFT"}
-                    target={`TARGET: ${IS_TARGET_EFF_RFT.floor.rft}%`}
-                    data={"70%"}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <AnalyzerTotalOutput
-                    customStyle={SET_FULL_SCREEN_LAPTOP_}
-                    header={"TOTAL OUTPUT"}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={6}>
-                  <AnalyzerTopLine
-                    customStyle={SET_FULL_SCREEN_LAPTOP_}
-                    header={"STOPLINE"}
-                    data={stopLineList}
-                  />
-                </Grid>
+      {isState ? (
+        <Box component={"div"} className="production-screen-body">
+          {navigate.line === "" ? (
+            <Grid
+              container
+              spacing={{ xs: 2, md: 2 }}
+              columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
+            >
+              <Grid item xs={4}>
+                <EFFByFloor
+                  setGetEFF={setGetEFF}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  header={
+                    navigate?.floor === ""
+                      ? t("production.eff-by-the-floor")
+                      : t("production.eff-by-the-line")
+                  }
+                  type={"eff"}
+                  typeChart={"ColumnMixed"}
+                  checkFloorLine={navigate?.floor}
+                  data={DATA_PRODUCTION}
+                  titleTarget={t("production.eff-by-the-floor-target")}
+                  titleActual={t("production.eff-by-the-floor-actual")}
+                />
               </Grid>
-            </Grid>
-            <Grid item xs={4}>
-              <OutPutByFloor
-                customStyle={SET_FULL_SCREEN_LAPTOP}
-                setHeightChart={SET_HEIGHT_CHART}
-                header={"OUTPUT BY LINE"}
-                data={OUTPUT_BY_FLOOR}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <HourlyOutputByFloor
-                customStyle={SET_FULL_SCREEN_LAPTOP}
-                setHeightTable={SET_HEIGHT_CHART}
-                header={"HOURLY OUTPUT BY FLOOR"}
-                data={tableData}
-              />
-            </Grid>
-            <Grid item xs={4} sx={SET_FULL_SCREEN_LAPTOP}>
-              <AttendanceByFloor
-                customStyle={SET_FULL_SCREEN_LAPTOP}
-                setHeightChart={SET_HEIGHT_CHART}
-                header={"ATTENDANCE BY FLOOR"}
-                data={chartData}
-              />
-            </Grid>
-          </Grid>
-        ) : (
-          <Slick setDot={false} setArrow={true} swipe={true}>
-            <div>
-              <Grid
-                container
-                spacing={{ xs: 2, md: 2 }}
-                columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
-              >
-                <Grid item xs={4}>
-                  <EFFByTheHour
-                    customStyle={SET_FULL_SCREEN_LAPTOP}
-                    setHeightChart={SET_HEIGHT_CHART}
-                    header={"EFFICIENCY BY THE HOUR"}
-                    type={"eff"}
-                    section={navigate.section}
-                    data={RFT_BY_THE_FLOOR}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <RFTByTheHour
-                    customStyle={SET_FULL_SCREEN_LAPTOP}
-                    setHeightChart={SET_HEIGHT_CHART}
-                    header={"RFT BY THE HOUR"}
-                    type={"rft"}
-                    section={navigate.section}
-                    data={EFF_BY_THE_FLOOR}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <ModelRun
-                    customStyle={SET_FULL_SCREEN_LAPTOP}
-                    header={"MODEL RUN BY LINE"}
-                    targetStitching={target.targetStitching}
-                    targetAssembly={target.targetAssembly}
-                    data={SHOE_DATA}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <OutPutTheHour
-                    customStyle={SET_FULL_SCREEN_LAPTOP}
-                    setHeightChart={SET_HEIGHT_CHART}
-                    header={"OUTPUT BY THE HOUR"}
-                    target={TARGET}
-                    plannedWorkingHours={8}
-                    data={OUTPUT_BY_THE_HOURS}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <PPHByTheHour
-                    customStyle={SET_FULL_SCREEN_LAPTOP}
-                    setHeightChart={SET_HEIGHT_CHART}
-                    header={"PPH BY THE HOUR"}
-                    data={OUTPUT_BY_THE_HOURS}
-                    worker={WORKER}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6} md={6}>
-                      <AnalyzerTarget
-                        customStyle={SET_FULL_SCREEN_LAPTOP_}
-                        header={"EFFICIENCY"}
-                        target={`BASE LINE: ${IS_TARGET_EFF_RFT.floor.eff}%`}
-                        data={"70%"}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={6}>
-                      <AnalyzerTarget
-                        customStyle={SET_FULL_SCREEN_LAPTOP_}
-                        header={"EFT"}
-                        target={`TARGET: ${IS_TARGET_EFF_RFT.floor.rft}%`}
-                        data={"70%"}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={6}>
-                      <AnalyzerTotalOutput
-                        customStyle={SET_FULL_SCREEN_LAPTOP_}
-                        header={"TOTAL OUTPUT"}
-                      />
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={6}>
-                      <AnalyzerAttendance
-                        customStyle={SET_FULL_SCREEN_LAPTOP_}
-                        header={"ATTENDANCE"}
-                      />
-                    </Grid>
+              <Grid item xs={4}>
+                <RFTByFloor
+                  setRFT={setRFT}
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  header={
+                    navigate?.floor === ""
+                      ? t("production.rft-by-the-floor")
+                      : t("production.rft-by-the-line")
+                  }
+                  checkFloorLine={navigate?.floor}
+                  type={"rft"}
+                  typeChart={"ColumnMixed"}
+                  data={DATA_PRODUCTION}
+                  titleTarget={t("production.rft-by-the-floor-target")}
+                  titleActual={t("production.rft-by-the-floor-actual")}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6} sm={6} md={6}>
+                    <AnalyzerTarget
+                      customStyle={SET_FULL_SCREEN_LAPTOP_}
+                      header={t("production.eff")}
+                      target={`${t("production.eff-base-line")} ${
+                        IS_TARGET_EFF_RFT.floor.eff
+                      }%`}
+                      data={`${getEFF}%`}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6} md={6}>
+                    <AnalyzerTarget
+                      customStyle={SET_FULL_SCREEN_LAPTOP_}
+                      header={t("production.rft")}
+                      target={`${t("production.rft-target")} ${
+                        IS_TARGET_EFF_RFT.floor.rft
+                      }%`}
+                      data={`${getRFT}%`}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <AnalyzerTotalOutput
+                      customStyle={SET_FULL_SCREEN_LAPTOP_}
+                      header={t("production.total-output")}
+                      titleTarget={t("production.total-output-target")}
+                      titleActual={t("production.total-output-actual")}
+                      data={DATA_PRODUCTION}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={6} md={6}>
+                    <AnalyzerTopLine
+                      customStyle={SET_FULL_SCREEN_LAPTOP_}
+                      header={t("production.stopline")}
+                      data={stopLineList}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
-            </div>
-            <div>
-              <Grid
-                container
-                spacing={{ xs: 2, md: 2 }}
-                columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
-              >
-                <Grid item xs={12}>
-                  <Top3Defect
-                    header={"STOPLINE TOP 3 DEFECT"}
-                    data={TOP3_DEFECT}
-                    setHeightChart={SET_HEIGHT_CHART}
-                  />
-                </Grid>
+              <Grid item xs={4}>
+                <OutPutByFloor
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  header={
+                    navigate?.floor === ""
+                      ? t("production.output-by-floor")
+                      : t("production.output-by-line")
+                  }
+                  data={DATA_PRODUCTION}
+                  // data={OUTPUT_BY_FLOOR}
+                />
               </Grid>
-            </div>
-          </Slick>
-        )}
-      </Box>
+              <Grid item xs={4}>
+                <HourlyOutputByFloor
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightTable={SET_HEIGHT_CHART}
+                  header={
+                    navigate?.floor === ""
+                      ? t("production.hourly-output-by-floor")
+                      : t("production.hourly-output-by-line")
+                  }
+                  data={DATA_PRODUCTION}
+                />
+              </Grid>
+              <Grid item xs={4} sx={SET_FULL_SCREEN_LAPTOP}>
+                <AttendanceByFloor
+                  customStyle={SET_FULL_SCREEN_LAPTOP}
+                  setHeightChart={SET_HEIGHT_CHART}
+                  header={
+                    navigate?.floor === ""
+                      ? t("production.attendance-by-floor")
+                      : t("production.attendance-by-line")
+                  }
+                  data={DATA_PRODUCTION}
+                />
+              </Grid>
+            </Grid>
+          ) : (
+            <Slick setDot={false} setArrow={true} swipe={true}>
+              <div>
+                <Grid
+                  container
+                  spacing={{ xs: 2, md: 2 }}
+                  columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
+                >
+                  <Grid item xs={4}>
+                    <EFFByTheHour
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      setHeightChart={SET_HEIGHT_CHART}
+                      header={t("production.eff-by-the-hour")}
+                      type={"eff"}
+                      section={navigate.section}
+                      data={DATA_PRODUCTION}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <RFTByTheHour
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      setHeightChart={SET_HEIGHT_CHART}
+                      header={t("production.rft-by-the-hour")}
+                      type={"rft"}
+                      section={navigate.section}
+                      // data={EFF_BY_THE_FLOOR}
+                      data={DATA_PRODUCTION}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ModelRun
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      header={t("production.model-run-by-line")}
+                      // targetStitching={target.targetStitching}
+                      // targetAssembly={target.targetAssembly}
+                      // data={SHOE_DATA}
+                      data={DATA_PRODUCTION}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <OutPutTheHour
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      setHeightChart={SET_HEIGHT_CHART}
+                      header={t("production.output-by-the-hour")}
+                      // target={TARGET}
+                      // plannedWorkingHours={8}
+                      // data={OUTPUT_BY_THE_HOURS}
+                      section={navigate.section}
+                      data={DATA_PRODUCTION}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <PPHByTheHour
+                      customStyle={SET_FULL_SCREEN_LAPTOP}
+                      setHeightChart={SET_HEIGHT_CHART}
+                      header={t("production.pph-by-the-hour")}
+                      // data={OUTPUT_BY_THE_HOURS}
+                      // worker={WORKER}
+                      section={navigate.section}
+                      data={DATA_PRODUCTION}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6} sm={6} md={6}>
+                        <AnalyzerTarget
+                          customStyle={SET_FULL_SCREEN_LAPTOP_}
+                          header={t("production.eff")}
+                          target={`${t("production.eff-base-line")} ${
+                            IS_TARGET_EFF_RFT.floor.eff
+                          }%`}
+                          // data={"70%"}
+                          type={"eff"}
+                          section={navigate.section}
+                          data={DATA_PRODUCTION}
+                          line={navigate.line}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6} md={6}>
+                        <AnalyzerTarget
+                          customStyle={SET_FULL_SCREEN_LAPTOP_}
+                          header={t("production.rft")}
+                          target={`${t("production.rft-target")} ${
+                            IS_TARGET_EFF_RFT.floor.rft
+                          }%`}
+                          // data={"70%"}
+                          type={"rft"}
+                          section={navigate.section}
+                          data={DATA_PRODUCTION}
+                          line={navigate.line}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6} md={6}>
+                        <AnalyzerTotalOutput
+                          customStyle={SET_FULL_SCREEN_LAPTOP_}
+                          header={t("production.total-output")}
+                          titleTarget={t("production.total-output-target")}
+                          titleActual={t("production.total-output-actual")}
+                          section={navigate.section}
+                          data={DATA_PRODUCTION}
+                          line={navigate.line}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6} md={6}>
+                        <AnalyzerAttendance
+                          customStyle={SET_FULL_SCREEN_LAPTOP_}
+                          header={t("production.attendance")}
+                          section={navigate.section}
+                          data={DATA_PRODUCTION}
+                          line={navigate.line}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </div>
+              <div>
+                <Grid
+                  container
+                  spacing={{ xs: 2, md: 2 }}
+                  columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}
+                >
+                  <Grid item xs={12}>
+                    <Top3Defect
+                      header={t("production.stopline-top-3-defect")}
+                      // data={TOP3_DEFECT}
+                      setHeightChart={SET_HEIGHT_CHART}
+                      data={stopLineTop3}
+                      line={navigate.line}
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+            </Slick>
+          )}
+        </Box>
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          <CircularProgress />
+        </div>
+      )}
     </Box>
   );
 };

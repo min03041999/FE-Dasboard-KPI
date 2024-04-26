@@ -40,7 +40,13 @@ const TableRowSpan = (props) => {
       <Table padding="none" sx={{ ...CustomTableStyle }}>
         <TableHead sx={{ background: "#337ab7" }}>
           <TableRow>
-            <TableCell rowSpan={2} sx={{ ...TableStyle, color: "#fff" }}>
+            <TableCell
+              rowSpan={2}
+              sx={{
+                ...TableStyle,
+                color: "#fff",
+              }}
+            >
               {t("stockfitting.hourly-output-by-line-line")}
             </TableCell>
             <TableCell rowSpan={2} sx={{ ...TableStyle, color: "#fff" }}>
@@ -64,31 +70,33 @@ const TableRowSpan = (props) => {
         <TableBody>
           {data?.map((item, index) => (
             <TableRow key={index} sx={index % 2 === 0 ? {} : oddRowStyle}>
-              <TableCell sx={TableStyle}>{item?.line}</TableCell>
+              <TableCell sx={TableStyle} style={{ whiteSpace: "nowrap" }}>
+                {item?.line}
+              </TableCell>
               <TableCell sx={TableStyle}>{item?.target}</TableCell>
               <TableCell
                 sx={{
                   ...TableStyle,
-                  color: formatCheck(item?.actual["7:30-8:30"], item?.target),
+                  color: formatCheck(item?.actual["07:30-08:30"], item?.target),
                 }}
               >
-                {item?.actual["7:30-8:30"]}
+                {item?.actual["07:30-08:30"]}
               </TableCell>
               <TableCell
                 sx={{
                   ...TableStyle,
-                  color: formatCheck(item?.actual["8:30-9:30"], item?.target),
+                  color: formatCheck(item?.actual["08:30-09:30"], item?.target),
                 }}
               >
-                {item?.actual["8:30-9:30"]}
+                {item?.actual["08:30-09:30"]}
               </TableCell>
               <TableCell
                 sx={{
                   ...TableStyle,
-                  color: formatCheck(item?.actual["9:30-10:30"], item?.target),
+                  color: formatCheck(item?.actual["09:30-10:30"], item?.target),
                 }}
               >
-                {item?.actual["9:30-10:30"]}
+                {item?.actual["09:30-10:30"]}
               </TableCell>
               <TableCell
                 sx={{

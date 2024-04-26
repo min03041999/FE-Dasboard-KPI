@@ -5,14 +5,14 @@ import { TOTAL_DOWNTIME_BY_LINE } from "../../data";
 const TotalMachineDowntimeByLine = (props) => {
   const { customStyle, header, setHeightChart, titleMinutes, data } = props;
 
-  const transformedData = data.map((item) => {
+  const transformedData = data?.map((item) => {
     return {
       name: item.floors,
       value: item.minutess,
     };
   });
 
-  const totalMinute = transformedData.reduce(
+  const totalMinute = transformedData?.reduce(
     (total, curr) => total + curr.value,
     0
   );

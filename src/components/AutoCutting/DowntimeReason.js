@@ -88,7 +88,7 @@ const DowntimeReason = (props) => {
           flexDirection="column"
           justifyContent="space-evenly"
         >
-          {downtimeReasonData.map((data, index) => (
+          {downtimeReasonData?.map((data, index) => (
             <Box display="flex" alignItems={"center"} key={index}>
               <Box width={"30%"}>
                 <Typography fontWeight="bold">{data.title}</Typography>

@@ -22,15 +22,17 @@ const MechanicList = (props) => {
     t("downtime.mechanic-list-total-repairing"),
   ];
 
-  const transformedData = data?.map((item) => {
-    return {
-      Mechanic: item.mechanic,
-      MechanicType: item.mechanic_type,
-      CurrentTask: item.current_task,
-      Status: item.status,
-      TotalRepairing: item.counts,
-    };
-  });
+  const transformedData = Array.isArray(data)
+    ? data.map((item) => {
+        return {
+          Mechanic: item.mechanic,
+          MechanicType: item.mechanic_type,
+          CurrentTask: item.current_task,
+          Status: item.status,
+          TotalRepairing: item.counts,
+        };
+      })
+    : [];
 
   const setHeightTable = {
     ...customStyle,

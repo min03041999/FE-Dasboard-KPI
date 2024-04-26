@@ -1,26 +1,63 @@
-import React from 'react';
-import Card from '../Card';
-import Title from '../Title';
-import TableRowSpan from '../TableRowSpan';
+import React, { useMemo } from "react";
+import Card from "../Card";
+import Title from "../Title";
+import TableRowSpan from "../TableRowSpan";
+import { HEADER_TABLE } from "../../utils/enum";
+import { Box, CircularProgress } from "@mui/material";
 
 const HourlyOutputByFloor = (props) => {
-    const { customStyle, setHeightTable, header, data } = props;
+  const { customStyle, setHeightTable, header, data } = props;
 
-    const HEADER_TABLE = ["07:30 08:30", "08:30 09:30", "09:30 10:30", "10:30 11:30", "12:30 13:30", "13:30 14:30", "14:30 15:30", "15:30 16:30"];
+  // console.log(data);
+  const hourlyOuput = useMemo(() => {
+    return data?.map((item, index) => {
+      return {
+        target: Math.round(item.targetAssembly / 9),
+        line: item.lineAlias,
+        actual: item.actualAssembly,
+      };
+    });
+  }, [data]);
 
-    const formatCheck = (actual, target) => {
-        return actual < target ? "red" :
-            actual >= target - (target * 5) / 100 &&
-                actual <= target - 1 ? "orange" : "green";
-    }
+  const sortedArray = hourlyOuput?.sort((a, b) => {
+    const lineA = parseInt(a.line.split("-")[1]);
+    const lineB = parseInt(b.line.split("-")[1]);
+    return lineA - lineB;
+  });
 
-    return (
-        <Card customStyle={customStyle}>
-            <Title name={header} />
+  const formatCheck = (actual, target) => {
+    return actual < target
+      ? "red"
+      : actual >= target - (target * 5) / 100 && actual <= target - 1
+      ? "orange"
+      : "green";
+  };
 
-            <TableRowSpan setHeightTable={setHeightTable} headerTable={HEADER_TABLE} formatCheck={formatCheck} data={data} />
-        </Card>
-    )
-}
+  return (
+    <Card customStyle={customStyle}>
+      <Title name={header} />
+
+      {!data ? (
+        <Box
+          sx={{
+            height: setHeightTable,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <TableRowSpan
+          setHeightTable={setHeightTable}
+          headerTable={HEADER_TABLE}
+          formatCheck={formatCheck}
+          data={sortedArray}
+        />
+      )}
+    </Card>
+  );
+};
 
 export default HourlyOutputByFloor;

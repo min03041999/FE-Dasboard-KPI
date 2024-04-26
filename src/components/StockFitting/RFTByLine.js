@@ -20,7 +20,7 @@ const RFTByLine = (props) => {
 
   const ticks = [0, IS_TARGET_STOCK_FITTING.line.rft];
 
-  const transformedData_RFT = data.map((item) => {
+  const transformedData_RFT = data?.map((item) => {
     return {
       data_1: item.name_machine,
       data_2: item.rft,

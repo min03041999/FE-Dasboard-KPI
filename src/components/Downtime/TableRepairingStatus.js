@@ -60,7 +60,7 @@ export default function TableRepairingStatus(props) {
               key={i}
               sx={{ ...TableBodyStyle, ...customTableBodyStyle }}
             >
-              {Object.keys(item).map((key, index) => (
+              {Object.keys(item)?.map((key, index) => (
                 <TableCell
                   key={index}
                   align={alignText ? "center" : "left"}
@@ -75,7 +75,9 @@ export default function TableRepairingStatus(props) {
                         : "#70b44c",
                   }}
                 >
-                  {item[key]}
+                  <Typography fontSize={12} fontWeight={"bold"}>
+                    {item[key]}
+                  </Typography>
                 </TableCell>
               ))}
             </TableRow>

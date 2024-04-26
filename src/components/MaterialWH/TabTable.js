@@ -177,7 +177,7 @@ function TabDailyInspectionReport(props) {
     };
   });
 
-  const DATA_MATQCCHECK = matQCCheck.map((data) => {
+  const DATA_MATQCCHECK = matQCCheck?.map((data) => {
     return {
       ReceivedDate: tranformed_date(data.ReceivedDate),
       Report_No: data.Report_No,

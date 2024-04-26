@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../Card";
 import DefectTable from "./DefectTable";
 import { useTranslation } from "react-i18next";
+import { Box, CircularProgress } from "@mui/material";
 
 const TopDefectSubcon = (props) => {
   const { customStyle, data } = props;
@@ -25,7 +26,20 @@ const TopDefectSubcon = (props) => {
 
   return (
     <Card customStyle={customStyle}>
-      <DefectTable header={HEADER_N761} data={data_top_3_subcon} />
+      {!data_top_3_subcon.length ? (
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <DefectTable header={HEADER_N761} data={data_top_3_subcon} />
+      )}
     </Card>
   );
 };

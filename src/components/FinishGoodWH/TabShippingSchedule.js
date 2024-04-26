@@ -8,6 +8,7 @@ import moment from "moment";
 import { fgwhApi } from "../../api/FGWH/fgwhApi";
 
 import { useTranslation } from "react-i18next";
+import { CircularProgress } from "@mui/material";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -75,7 +76,7 @@ function TabShippingSchedule(props) {
     getShippings(date);
   };
 
-  const DATA_SHIPPING_SCHEDULE = shippings.map((data) => {
+  const DATA_SHIPPING_SCHEDULE = shippings?.map((data) => {
     return {
       RY: data.RY,
       PO: data.PO,
@@ -97,6 +98,8 @@ function TabShippingSchedule(props) {
       SHIPPED_STATUS: data.SHIPPED_STATUS,
     };
   });
+
+  // console.log(DATA_SHIPPING_SCHEDULE);
 
   const HEADER_SHIPPING_SCHEDULE = [
     t("fg-w-h.shipping-schedule-ry"),
@@ -134,46 +137,85 @@ function TabShippingSchedule(props) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <DataTable
-          header={HEADER_SHIPPING_SCHEDULE}
-          data={DATA_SHIPPING_SCHEDULE}
-          height={setHeightTable}
-          customTableHeadStyle={{
-            bgcolor: "#337ab7",
-            color: "#fff",
-            textAlign: "center",
-          }}
-          customTextStyle={{ whiteSpace: "nowrap" }}
-          alignText="center"
-        />
+        {!DATA_SHIPPING_SCHEDULE.length ? (
+          <Box
+            sx={{
+              height: setHeightTable,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            header={HEADER_SHIPPING_SCHEDULE}
+            data={DATA_SHIPPING_SCHEDULE}
+            height={setHeightTable}
+            customTableHeadStyle={{
+              bgcolor: "#337ab7",
+              color: "#fff",
+              textAlign: "center",
+            }}
+            customTextStyle={{ whiteSpace: "nowrap" }}
+            alignText="center"
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <DataTable
-          header={HEADER_SHIPPING_SCHEDULE}
-          data={DATA_SHIPPING_SCHEDULE}
-          height={setHeightTable}
-          customTableHeadStyle={{
-            bgcolor: "#337ab7",
-            color: "#fff",
-            textAlign: "center",
-          }}
-          customTextStyle={{ whiteSpace: "nowrap" }}
-          alignText="center"
-        />
+        {!DATA_SHIPPING_SCHEDULE.length ? (
+          <Box
+            sx={{
+              height: setHeightTable,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            header={HEADER_SHIPPING_SCHEDULE}
+            data={DATA_SHIPPING_SCHEDULE}
+            height={setHeightTable}
+            customTableHeadStyle={{
+              bgcolor: "#337ab7",
+              color: "#fff",
+              textAlign: "center",
+            }}
+            customTextStyle={{ whiteSpace: "nowrap" }}
+            alignText="center"
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <DataTable
-          header={HEADER_SHIPPING_SCHEDULE}
-          data={DATA_SHIPPING_SCHEDULE}
-          height="100%"
-          customTableHeadStyle={{
-            bgcolor: "#337ab7",
-            color: "#fff",
-            textAlign: "center",
-          }}
-          customTextStyle={{ whiteSpace: "nowrap" }}
-          alignText="center"
-        />
+        {!DATA_SHIPPING_SCHEDULE.length ? (
+          <Box
+            sx={{
+              height: setHeightTable,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            header={HEADER_SHIPPING_SCHEDULE}
+            data={DATA_SHIPPING_SCHEDULE}
+            height="100%"
+            customTableHeadStyle={{
+              bgcolor: "#337ab7",
+              color: "#fff",
+              textAlign: "center",
+            }}
+            customTextStyle={{ whiteSpace: "nowrap" }}
+            alignText="center"
+          />
+        )}
       </CustomTabPanel>
     </Box>
   );

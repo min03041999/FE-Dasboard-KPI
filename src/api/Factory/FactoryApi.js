@@ -5,10 +5,6 @@ const factoryApi = {
     const url = "factory/getDistinctFloor";
     return axiosClient.get(url);
   },
-  getFloorDataApi: (date, line) => {
-    const url = `factory/getFloorData?date=${date}&line=${line}`;
-    return axiosClient.get(url);
-  },
 };
 
 export { factoryApi };

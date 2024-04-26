@@ -25,7 +25,7 @@ const TotalOutputByRY = (props) => {
     t("stockfitting.total-output-by-ry-ongoing"),
   ];
 
-  const DATA = totalOutputByRyData.map((data) => {
+  const DATA = totalOutputByRyData?.map((data) => {
     return {
       SCBH: data.SCBH,
       ARTICLE: data.ARTICLE,

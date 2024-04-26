@@ -5,7 +5,7 @@ export const IS_TARGET_EFF_RFT = {
       stitching: 95,
       assembly: 90,
     },
-    eff: 60.5,
+    eff: 62,
   },
   floor: {
     rft: 90,

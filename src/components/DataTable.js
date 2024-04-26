@@ -83,7 +83,7 @@ export default function DataTable(props) {
               key={i}
               sx={{ ...TableBodyStyle, ...customTableBodyStyle }}
             >
-              {Object.keys(item).map((key, index) => (
+              {Object.keys(item)?.map((key, index) => (
                 <TableCell key={index} align={alignText ? "center" : "left"}>
                   <Typography
                     variant="overline"

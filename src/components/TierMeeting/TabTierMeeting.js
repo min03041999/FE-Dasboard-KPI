@@ -7,6 +7,7 @@ import DataTable from "../DataTable";
 import { tranformed_date } from "../../utils/transformed";
 
 import { useTranslation } from "react-i18next";
+import { CircularProgress } from "@mui/material";
 
 function CustomTabPanel(props) {
   const { children, value, index } = props;
@@ -19,7 +20,7 @@ function TabTierMeeting(props) {
 
   const [value, setValue] = React.useState(0);
 
-  const DATA_TIER_MEETING = tierMeetingData.map((data) => {
+  const DATA_TIER_MEETING = tierMeetingData?.map((data) => {
     return {
       tier_level: data.tier_level,
       meeting_date: tranformed_date(data.meeting_date),
@@ -75,32 +76,58 @@ function TabTierMeeting(props) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <DataTable
-          header={HEADER_TIER_MEETING}
-          data={DATA_TIER_MEETING}
-          height={setHeightTable}
-          customTableHeadStyle={{
-            bgcolor: "#337ab7",
-            color: "#fff",
-            height: 60,
-            textAlign: "center",
-          }}
-          alignText="center"
-        />
+        {!DATA_TIER_MEETING.length ? (
+          <Box
+            sx={{
+              height: setHeightTable,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            header={HEADER_TIER_MEETING}
+            data={DATA_TIER_MEETING}
+            height={setHeightTable}
+            customTableHeadStyle={{
+              bgcolor: "#337ab7",
+              color: "#fff",
+              height: 60,
+              textAlign: "center",
+            }}
+            alignText="center"
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <DataTable
-          header={HEADER_TIER_MEETING}
-          data={DATA_TIER_MEETING}
-          height={setHeightTable}
-          customTableHeadStyle={{
-            bgcolor: "#337ab7",
-            color: "#fff",
-            height: 60,
-            textAlign: "center",
-          }}
-          alignText="center"
-        />
+        {!DATA_TIER_MEETING.length ? (
+          <Box
+            sx={{
+              height: setHeightTable,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataTable
+            header={HEADER_TIER_MEETING}
+            data={DATA_TIER_MEETING}
+            height={setHeightTable}
+            customTableHeadStyle={{
+              bgcolor: "#337ab7",
+              color: "#fff",
+              height: 60,
+              textAlign: "center",
+            }}
+            alignText="center"
+          />
+        )}
       </CustomTabPanel>
     </Box>
   );

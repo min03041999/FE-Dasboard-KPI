@@ -1,3 +1,42 @@
+import { inRange, random } from "lodash";
+
+export const handleFakeRft = (value) => {
+  if (value !== 0) {
+    if (value <= 40) {
+      return random(75, 79);
+    } else if (value > 40 && value <= 60) {
+      return random(79, 81);
+    } else if (value > 60 && value <= 75) {
+      return random(82, 84);
+    } else if (value > 75 && value <= 84) {
+      return random(85, 89);
+    } else {
+      return random(85, 89);
+    }
+  } else {
+    return 0;
+  }
+};
+
+export const handleFakeEffFloor = (floor, eff) => {
+  switch (floor) {
+    case "A-F1":
+      return random(65, 75);
+    case "A-F2":
+      return random(65, 75);
+    case "A-F4":
+      return random(65, 75);
+    case "B-F2":
+      return random(65, 75);
+    case "C-F2":
+      return random(65, 75);
+    case "D-F1":
+      return random(65, 75);
+    case "D-F3":
+      return random(65, 75);
+  }
+};
+
 export const handleFakeEff = (line, eff) => {
   if (line.includes("A-")) {
     if (inRange(eff, 65, 75)) {

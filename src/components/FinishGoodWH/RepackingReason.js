@@ -12,13 +12,14 @@ import {
 } from "recharts";
 // import { FINISH_GOOD_WH } from "../../data";
 import { useTranslation } from "react-i18next";
+import FadeInNumber from "../../utils/animation";
 const colors = ["#fb4343", "#a0d468", "#ffce54", "#118dff", "#ff5d5d"];
 
 const RepackingReason = (props) => {
   const { customStyle, header, fgwhData } = props;
   const [t] = useTranslation("global");
 
-  console.log(fgwhData);
+  // console.log(fgwhData);
   const setHeight = {
     ...customStyle,
     height: parseFloat(parseInt(customStyle.height, 10) - 100),
@@ -33,7 +34,7 @@ const RepackingReason = (props) => {
         fontWeight={500}
         textAlign={"center"}
       >
-        {fgwhData.repackingReason.po.total} PO
+        <FadeInNumber n={fgwhData.repackingReason.po.total} /> PO
       </Typography>
       <Box width="100%" height={setHeight} display="flex">
         <Box width="60%" height="100%">
@@ -43,7 +44,7 @@ const RepackingReason = (props) => {
               margin={{ top: 20, bottom: 35 }}
             >
               <Bar dataKey="qty">
-                {fgwhData.repackingReason.defects.map((entry, i) => (
+                {fgwhData.repackingReason.defects?.map((entry, i) => (
                   <Cell key={`cell-${i}`} fill={colors[i % colors.length]} />
                 ))}
                 <LabelList
@@ -58,7 +59,7 @@ const RepackingReason = (props) => {
           </ResponsiveContainer>
         </Box>
         <Box width="40%" display={"flex"} flexDirection={"column"} gap={2}>
-          {fgwhData.repackingReason.defects.map((data, index) => (
+          {fgwhData.repackingReason.defects?.map((data, index) => (
             <Box display={"flex"} alignItems={"flex-start"} gap={1} key={index}>
               <Box
                 width={"2rem"}
